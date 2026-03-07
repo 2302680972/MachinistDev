@@ -21,6 +21,18 @@ CreateAI(Machinist)平台开发工作流
 
 ## 快速开始
 
+### 安装
+
+这是一个公开的 Skill 仓库，核心 Skill 位于：
+
+- `skills/.curated/machinist`
+
+如果你的工具支持从 GitHub 仓库安装 Skills，可直接指向本仓库，再选择上述目录作为 Skill 根目录。
+
+### AGENTS模板
+
+`agents_claude.template.md`是一个AGENTS.md的模板,提供了平台的重要注意事项
+
 ### 代码模板
 
 位于 `skills/.curated/machinist/assets/` 目录，按功能分类：
@@ -47,6 +59,12 @@ CreateAI(Machinist)平台开发工作流
 Marketspace/安装脚本使用的 Skill 路径：
 
 - `skills/.curated/machinist`
+
+### 元数据
+
+面向 Skill 列表展示的元数据位于：
+
+- `skills/.curated/machinist/agents/openai.yaml`
 
 ## 标准来源
 

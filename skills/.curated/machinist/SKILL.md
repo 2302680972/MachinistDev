@@ -5,10 +5,6 @@ description: BeScript 工程开发知识库；当工作区根目录存在 `setti
 
 # BeScript 工程开发知识库
 
-## 触发条件
-
-工作区根目录存在 `setting.json`（Hjson），且包含 `guid`/`name`/`mainMap` 字段。
-
 ## 术语规范
 
 ### 翻译固定
