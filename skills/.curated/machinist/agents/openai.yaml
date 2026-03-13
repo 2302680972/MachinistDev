@@ -1,6 +1,6 @@
 interface:
   display_name: "Machinist 开发"
-  short_description: "CreateAI(Machinist) BeScript 工程开发参考与工作流"
+  short_description: "CreatAI(Machinist) BeScript 工程开发参考与工作流"
   default_prompt: "使用 $machinist 分析当前工作区的 BeScript 工程结构，并给出下一步开发建议。"
 
 policy:
