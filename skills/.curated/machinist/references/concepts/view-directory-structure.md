@@ -30,8 +30,7 @@
 可编辑零件视图位于 `temp/toolkit/views/**/*.ts`。
 
 - `temp/toolkit/views/<载体目录>/<零件ID>.ts`：零件 TS 视图文件。
-- `temp/toolkit/bescript_reference/sdk.base.d.ts`：基础库声明，只读。
-- `temp/toolkit/bescript_reference/sdk.ext.d.ts`：扩展库声明，只读。
+- `temp/toolkit/bescript_reference/sdk.ts`：SDK声明，只读。
 - `temp/toolkit/bescript_reference/custom-logic.d.ts`：全工程脚本索引，只读。
 - `temp/toolkit/bescript_reference/CodeRepo.ts`：代码仓库索引视图，只读，不允许 patch。
 - `temp/toolkit/tsconfig.json`：TS 配置文件。
