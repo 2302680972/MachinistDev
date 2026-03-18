@@ -7,8 +7,7 @@
   * name: Model'RegisterType
   * sourcePath: map.map_/329/scripts/Model'RegisterType.code
   */
-@BeScript({ name: "Model'RegisterType", color: [104, 0, 255], comment: "注册类型" })
-public Script__X_Model_x27_RegisterType(modelKey: BeString, amount: BeLong): void {
+public X_Model_x27_RegisterType = BeScript({ name: "Model'RegisterType", color: [104, 0, 255], comment: "注册类型" })((modelKey: BeString, amount: BeLong) => {
   // @locals-begin
   var bullet: BeList
   var bulletUnused: BeList
@@ -27,21 +26,20 @@ public Script__X_Model_x27_RegisterType(modelKey: BeString, amount: BeLong): voi
   }
   created = G.create.long(BeLong.fromBeConst("0"))
   while (G.long.lt(created, amount)) {
-    model = Act.self<Device_Scenario_329>(this).Script__X_Model_x27_SetModel(BeVector3.fromBeConst("0,-1e+06,0"), BeVector3.fromBeConst("1,0,0"), modelKey)
+    model = Act.self<Device_Scenario_329>(this).X_Model_x27_SetModel(BeVector3.fromBeConst("0,-1e+06,0"), BeVector3.fromBeConst("1,0,0"), modelKey)
     core = model.getCoreDevice()
     core.callFun(BeString.fromBeConst("Public'AutoReclaim"), modelKey)
     created.addEqual(BeLong.fromBeConst("1"))
   }
   // --- 隐式返回勿修改
   return
-}
+});
 
 /**
   * name: Wall'New
   * sourcePath: map.map_/329/scripts/Wall'New.code
   */
-@BeScript({ name: "Wall'New", color: [8, 0, 255] })
-private Script__X_Wall_x27_New(pos: BeVector3, direction: BeVector3): BeMech {
+protected X_Wall_x27_New = BeScript({ name: "Wall'New", color: [8, 0, 255], private: true })((pos: BeVector3, direction: BeVector3) => {
   // @locals-begin
   var list: BeList
   var obj: BeMech
@@ -49,18 +47,17 @@ private Script__X_Wall_x27_New(pos: BeVector3, direction: BeVector3): BeMech {
 
   list = this.X_Model_x27_All.get<"BeList">(BeString.fromBeConst("wall"), BeBool.fromBeConst("0"))
   obj = G.createAIMech(BeString.fromBeConst("边界"), BeFloat.fromBeConst("0"), pos, direction, BeEnum.fromBeConst("0"), BeBool.fromBeConst("0"))
-  Act.self<Device_Scenario_329>(this).Script__X_Generic_x27_MechPhysics(obj, BeBool.fromBeConst("1"), BeFloat.fromBeConst("1"), BeFloat.fromBeConst("0"), BeFloat.fromBeConst("0"))
+  Act.self<Device_Scenario_329>(this).X_Generic_x27_MechPhysics(obj, BeBool.fromBeConst("1"), BeFloat.fromBeConst("1"), BeFloat.fromBeConst("0"), BeFloat.fromBeConst("0"))
   list.add(obj)
   // --- 隐式返回勿修改
   return obj
-}
+});
 
 /**
   * name: Wall'SetWall
   * sourcePath: map.map_/329/scripts/Wall'SetWall.code
   */
-@BeScript({ name: "Wall'SetWall", color: [8, 0, 255] })
-public Script__X_Wall_x27_SetWall(pos: BeVector3, direction: BeVector3): BeMech {
+public X_Wall_x27_SetWall = BeScript({ name: "Wall'SetWall", color: [8, 0, 255], retVar: "obj" })((pos: BeVector3, direction: BeVector3) => {
   // @locals-begin
   var exist: BeBool
   var list1: BeList
@@ -68,6 +65,7 @@ public Script__X_Wall_x27_SetWall(pos: BeVector3, direction: BeVector3): BeMech 
   var unused: BeList
   var index: BeFloat
   var obj: BeMech
+  // --- return-separator ---
   // @locals-end
 
   exist = this.X_Model_x27_All.contains(BeString.fromBeConst("wall"))
@@ -89,14 +87,14 @@ public Script__X_Wall_x27_SetWall(pos: BeVector3, direction: BeVector3): BeMech 
     unused.remove(index)
   }
   if (G.bool.not(exist)) {
-    obj = Act.self<Device_Scenario_329>(this).Script__X_Wall_x27_New(pos, direction)
+    obj = Act.self<Device_Scenario_329>(this).X_Wall_x27_New(pos, direction)
   }
   // --- 隐式返回勿修改
   return obj
-}
+});
 ```
 
 要点：
-- 装饰器使用 `@BeScript({ name: "...", color: [...], comment: "..." })` 格式
+- 使用 `BeScript({ name: "...", color: [...], comment: "..." })` 赋值格式
 - 注册时创建两个列表：All 和 Unused
 - 预创建时循环调用 SetModel 并立即回收

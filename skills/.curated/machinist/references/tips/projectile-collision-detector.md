@@ -51,7 +51,7 @@ this.UnusedGrid.remove($index)
 this.GridMap.insert($key, $obj)
 if (G.bool.not($unusedExist)) {
 }
-$obj = Act.self<Device_Scenario_329>(this).Script__X_Grid_x27_New($pos)
+$obj = Act.self<Device_Scenario_329>(this).X_Grid_x27_New($pos)
 ```
 
 ```ts

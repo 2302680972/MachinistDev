@@ -9,10 +9,10 @@
   * name: Bullet'SetBullet
   * sourcePath: map.map_/329/scripts/Bullet'SetBullet.code
   */
-@BeScript({ name: "Bullet'SetBullet", color: [0, 138, 255], comment: "设置一个普通子弹" })
-public Script__X_Bullet_x27_SetBullet($pos: BeVector3, $direction: BeVector3, $type: BeLong, $faction: BeLong, $player: BeStruct): BeBool {
+public X_Bullet_x27_SetBullet = BeScript({ name: "Bullet'SetBullet", color: [0, 138, 255], comment: "设置一个普通子弹", retVar: "$success" })(($pos: BeVector3, $direction: BeVector3, $type: BeLong, $faction: BeLong, $player: BeStruct) => {
   // @locals-begin
   var $success: BeBool
+  // --- return-separator ---
   var $bulletKey: BeString
   var $info: BeStruct
   var $modelKey: BeString
@@ -35,13 +35,13 @@ public Script__X_Bullet_x27_SetBullet($pos: BeVector3, $direction: BeVector3, $t
     $unusedList.remove($index)
   }
   if (G.bool.not($exist)) {
-    $obj = Act.self<Device_Scenario_329>(this).Script__X_Bullet_x27_New($modelKey, BeVector3.fromBeConst("1e+03,0,0"), $direction)
+    $obj = Act.self<Device_Scenario_329>(this).X_Bullet_x27_New($modelKey, BeVector3.fromBeConst("1e+03,0,0"), $direction)
   }
   // 初始化子弹属性...
   $success = G.create.bool(BeBool.fromBeConst("1"))
   // --- 隐式返回勿修改
   return $success
-}
+});
 ```
 
 ## 设置礼物模型
@@ -51,8 +51,7 @@ public Script__X_Bullet_x27_SetBullet($pos: BeVector3, $direction: BeVector3, $t
   * name: GiftModel'SetGiftModel
   * sourcePath: map.map_/329/scripts/GiftModel'SetGiftModel.code
   */
-@BeScript({ name: "GiftModel'SetGiftModel", color: [0, 138, 255], comment: "设置一个普通子弹" })
-public Script__X_GiftModel_x27_SetGiftModel($modelKey: BeString, $text: BeString, $player: BeStruct, $skipUI: BeBool, $mode: BeLong): void {
+public X_GiftModel_x27_SetGiftModel = BeScript({ name: "GiftModel'SetGiftModel", color: [0, 138, 255], comment: "设置一个普通子弹" })(($modelKey: BeString, $text: BeString, $player: BeStruct, $skipUI: BeBool, $mode: BeLong) => {
   // @locals-begin
   var $unusedList: BeList
   var $index: BeFloat
@@ -70,16 +69,16 @@ public Script__X_GiftModel_x27_SetGiftModel($modelKey: BeString, $text: BeString
     $unusedList.remove($index)
   }
   if (G.bool.not($exist)) {
-    $obj = Act.self<Device_Scenario_329>(this).Script__X_GiftModel_x27_New($modelKey)
+    $obj = Act.self<Device_Scenario_329>(this).X_GiftModel_x27_New($modelKey)
   }
   $obj.callFun(BeString.fromBeConst("Generic'PlayAnimation"), $modelKey, $text, $player, $skipUI, $mode)
   // --- 隐式返回勿修改
   return
-}
+});
 ```
 
 要点：
-- 装饰器使用 `@BeScript({ name: "...", color: [...], comment: "..." })` 格式
+- 使用 `BeScript({ name: "...", color: [...], comment: "..." })` 赋值格式
 - 先从 Unused 列表尝试获取可复用对象
 - 如果没有可复用对象，则创建新对象
 - 获取后设置 `setActive(true)` 并从 Unused 列表移除

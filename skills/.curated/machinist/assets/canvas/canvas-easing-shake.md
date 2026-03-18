@@ -9,8 +9,7 @@
   * name: UI_Tip'Animation
   * sourcePath: map.map_/54/scripts/UI_Tip'Animation.code
   */
-@BeScript({ name: "UI_Tip'Animation" })
-public Script__X_UI_Tip_x27_Animation(): void {
+public X_UI_Tip_x27_Animation = BeScript({ name: "UI_Tip'Animation" })(() => {
   // @locals-begin
   var 当前时间: BeFloat
   var 已用时间: BeFloat
@@ -33,9 +32,9 @@ public Script__X_UI_Tip_x27_Animation(): void {
     this.X_Tip_x27_AniActivate = G.create.bool(BeBool.fromBeConst("0"))
     G.script.skip()
   }
-  // --- 隐式返回勿修改
+  // @ts-ignore --- 隐式返回勿修改
   return
-}
+});
 ```
 
 ## 三角函数做抖动/呼吸效果

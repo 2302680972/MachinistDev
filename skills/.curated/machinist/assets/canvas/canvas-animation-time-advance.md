@@ -7,10 +7,10 @@
   * name: Generic'PlayVideo
   * sourcePath: 机械/玩家入场.mech_/312/scripts/Generic'PlayVideo.code
   */
-@BeScript({ name: "Generic'PlayVideo" })
-public Script__X_Generic_x27_PlayVideo(name1: BeString, UI: BeUIRawImage): BeBool {
+public X_Generic_x27_PlayVideo = BeScriptAsync({ name: "Generic'PlayVideo", retVar: "ret" })((name1: BeString, UI: BeUIRawImage) => {
   // @locals-begin
   var ret: BeBool
+  // --- return-separator ---
   var 当前颜色: BeColor
   var 视频信息: BeStruct
   var duration: BeFloat
@@ -22,7 +22,7 @@ public Script__X_Generic_x27_PlayVideo(name1: BeString, UI: BeUIRawImage): BeBoo
   // @locals-end
 
   ret = G.create.bool(BeBool.fromBeConst("0"))
-  if (Act.self<Device_玩家入场_312>(this).Script__callClientMapRet<"BeBool">(BeString.fromBeConst("弹幕.IsInGame"))) {
+  if (Act.self<Device_玩家入场_312>(this).callClientMapRet<"BeBool">(BeString.fromBeConst("弹幕.IsInGame"))) {
     当前颜色 = G.create.color(BeColor.fromBeConst("255,255,255,0"))
     视频信息 = UI.setVideo(name1)
     duration = 视频信息.get<"BeFloat">(BeString.fromBeConst("time"), BeBool.fromBeConst("0"))
@@ -40,18 +40,18 @@ public Script__X_Generic_x27_PlayVideo(name1: BeString, UI: BeUIRawImage): BeBoo
       }
       UI.setColor(当前颜色)
       X_continue = G.float.lt(timeUsed, duration)
-      G.delay(G.create.float(BeFloat.fromBeConst("0")))
+      await G.delay(G.create.float(BeFloat.fromBeConst("0")))
     }
-    G.delay(G.create.float(BeFloat.fromBeConst("0")))
+    await G.delay(G.create.float(BeFloat.fromBeConst("0")))
   }
   UI.del(BeFloat.fromBeConst("0"))
-  // --- 隐式返回勿修改
+  // @ts-ignore --- 隐式返回勿修改
   return ret
-}
+});
 ```
 
 要点：
-- 装饰器使用 `@BeScript({ name: "..." })` 格式
+- 含 `G.delay` 的脚本使用 `BeScriptAsync`
 - 用 `G.time.time()` 获取当前时间推进进度
 - 用 `lerp` 做颜色渐变
 - 循环末尾 `del` 收尾并结束

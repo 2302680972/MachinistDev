@@ -40,15 +40,15 @@ export class Device_普通子弹_1 extends Mech_3589db8ae95d408ea0b7e85354f6b635
 示例（TS 视图片段）：
 
 ```ts
-public Script__X_Public_x27_Damage($damage: BeFloat, $faction: BeLong): BeFloat {
+public X_Public_x27_Damage = BeScript({ name: "Public'Damage" })(($damage: BeFloat, $faction: BeLong) => {
   var $counter: BeFloat
   $counter = this.Core.callReturn<"BeFloat">(BeString.fromBeConst("Public'Damage"), $damage, $faction)
   return $counter
-}
+});
 
-public Script__X_Public_x27_OnCollision(from: BeMech): void {
+public X_Public_x27_OnCollision = BeScript({ name: "Public'OnCollision" })((from: BeMech) => {
   this.Grid.callFun(BeString.fromBeConst("Public'OnCollision"), from)
-}
+});
 ```
 
 再比如，在事件里拿到某个 `BeMech`，也可以直接按名字去调它的“公开脚本”：

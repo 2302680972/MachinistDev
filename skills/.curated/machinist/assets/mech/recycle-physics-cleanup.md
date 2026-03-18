@@ -9,8 +9,7 @@
   * name: Bullet'OnReclaim
   * sourcePath: map.map_/329/scripts/Bullet'OnReclaim.code
   */
-@BeScript({ name: "Bullet'OnReclaim", color: [0, 138, 255], comment: "回收模型" })
-public Script__X_Bullet_x27_OnReclaim($obj: BeMech, $modelType: BeLong): void {
+public X_Bullet_x27_OnReclaim = BeScript({ name: "Bullet'OnReclaim", color: [0, 138, 255], comment: "回收模型" })(($obj: BeMech, $modelType: BeLong) => {
   // @locals-begin
   var $key: BeString
   var $unused: BeList
@@ -22,7 +21,7 @@ public Script__X_Bullet_x27_OnReclaim($obj: BeMech, $modelType: BeLong): void {
   $obj.setActive(BeBool.fromBeConst("0"))
   // --- 隐式返回勿修改
   return
-}
+});
 ```
 
 ## 回收礼物模型
@@ -32,8 +31,7 @@ public Script__X_Bullet_x27_OnReclaim($obj: BeMech, $modelType: BeLong): void {
   * name: GiftModel'OnReclaim
   * sourcePath: map.map_/329/scripts/GiftModel'OnReclaim.code
   */
-@BeScript({ name: "GiftModel'OnReclaim", color: [0, 138, 255], comment: "回收事件" })
-public Script__X_GiftModel_x27_OnReclaim($obj: BeMech, $modelKey: BeString): void {
+public X_GiftModel_x27_OnReclaim = BeScript({ name: "GiftModel'OnReclaim", color: [0, 138, 255], comment: "回收事件" })(($obj: BeMech, $modelKey: BeString) => {
   // @locals-begin
   var $unused: BeList
   // @locals-end
@@ -43,7 +41,7 @@ public Script__X_GiftModel_x27_OnReclaim($obj: BeMech, $modelKey: BeString): voi
   $obj.setActive(BeBool.fromBeConst("0"))
   // --- 隐式返回勿修改
   return
-}
+});
 ```
 
 ## 强制回收子弹
@@ -53,8 +51,7 @@ public Script__X_GiftModel_x27_OnReclaim($obj: BeMech, $modelKey: BeString): voi
   * name: Bullet'ForceReclaimByModel
   * sourcePath: map.map_/329/scripts/Bullet'ForceReclaimByModel.code
   */
-@BeScript({ name: "Bullet'ForceReclaimByModel", comment: "按照使用的模型强制回收子弹" })
-public Script__X_Bullet_x27_ForceReclaimByModel($key: BeString): void {
+public X_Bullet_x27_ForceReclaimByModel = BeScript({ name: "Bullet'ForceReclaimByModel", comment: "按照使用的模型强制回收子弹" })(($key: BeString) => {
   // @locals-begin
   var $bullet: BeList
   var $index: BeFloat
@@ -74,7 +71,7 @@ public Script__X_Bullet_x27_ForceReclaimByModel($key: BeString): void {
   }
   // --- 隐式返回勿修改
   return
-}
+});
 ```
 
 ## 强制回收全部子弹
@@ -84,20 +81,19 @@ public Script__X_Bullet_x27_ForceReclaimByModel($key: BeString): void {
   * name: Bullet'ForceReclaimAll
   * sourcePath: map.map_/329/scripts/Bullet'ForceReclaimAll.code
   */
-@BeScript({ name: "Bullet'ForceReclaimAll", color: [0, 138, 255], comment: "强制回收全部子弹" })
-public Script__X_Bullet_x27_ForceReclaimAll(): void {
+public X_Bullet_x27_ForceReclaimAll = BeScript({ name: "Bullet'ForceReclaimAll", color: [0, 138, 255], comment: "强制回收全部子弹" })(() => {
   // @locals-begin
   // @locals-end
 
-  Act.self<Device_Scenario_329>(this).Script__X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("0"))
-  Act.self<Device_Scenario_329>(this).Script__X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("1"))
+  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("0"))
+  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("1"))
   // ... 其他模型类型
   // --- 隐式返回勿修改
   return
-}
+});
 ```
 
 要点：
-- 装饰器使用 `@BeScript({ name: "...", color: [...], comment: "..." })` 格式
+- 使用 `BeScript({ name: "...", color: [...], comment: "..." })` 赋值格式
 - 回收时将对象加入 Unused 列表并设置 `setActive(false)`
 - 强制回收通过调用 `Public'Damage` 触发死亡流程

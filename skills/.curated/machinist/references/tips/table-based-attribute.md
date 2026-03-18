@@ -62,8 +62,7 @@
 ## 6) 示例：先按 name 查行，再读文字/整数（`findExcel2` + `readExcel2`）
 
 ```ts
-@bsName("读取文字规则")
-public Script__读取文字规则(n: BeString): BeString {
+public 读取文字规则 = BeScript({ name: "读取文字规则" })((n: BeString) => {
   // @locals-begin
   var ID: BeLong
   var 文字: BeString
@@ -80,12 +79,11 @@ public Script__读取文字规则(n: BeString): BeString {
   }
   r = G.readExcel2<"BeString">(ID, BeString.fromBeConst("文字"), BeString.fromBeConst("规则"))
   return r
-}
+});
 ```
 
 ```ts
-@bsName("读取整数规则")
-public Script__读取整数规则(n: BeString): BeLong {
+public 读取整数规则 = BeScript({ name: "读取整数规则" })((n: BeString) => {
   // @locals-begin
   var ID: BeLong
   var 文字: BeString
@@ -102,15 +100,13 @@ public Script__读取整数规则(n: BeString): BeLong {
   }
   ret = G.readExcel2<"BeLong">(ID, BeString.fromBeConst("整数值"), BeString.fromBeConst("规则"))
   return ret
-}
+});
 ```
 
 ## 7) 示例：遍历 ID 列表，读一个“二维开关表”（碰撞层级）
 
 ```ts
-@bsName("碰撞层关系设定")
-@bsColor(255, 222, 0)
-private Event_clientStart__碰撞层关系设定($mapIndex: BeFloat, $rule: BeString): void {
+private 碰撞层关系设定 = EventGroup.clientStart(BeScript({ name: "碰撞层关系设定", color: [255, 222, 0] }))(($mapIndex: BeFloat, $rule: BeString) => {
   // @locals-begin
   var ID数据列表: BeList
   var 循环次数_纵: BeFloat
@@ -139,7 +135,7 @@ private Event_clientStart__碰撞层关系设定($mapIndex: BeFloat, $rule: BeSt
     }
     列表编号_纵 = G.float.add(列表编号_纵, BeFloat.fromBeConst("1"))
   }
-}
+});
 ```
 
 ## 8) 示例：GM 名单（遍历行，按列名读 Long）

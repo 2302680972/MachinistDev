@@ -9,32 +9,30 @@
   * name: 按钮点击'排行榜上一页
   * sourcePath: map.map_/277/scripts/按钮点击'排行榜上一页.code
   */
-@BeScript({ name: "按钮点击'排行榜上一页" })
-public Script__X_按钮点击_x27_排行榜上一页(): void {
+public X_按钮点击_x27_排行榜上一页 = BeScript({ name: "按钮点击'排行榜上一页" })(() => {
   // @locals-begin
   // @locals-end
 
   this.分页.minusEqual(BeLong.fromBeConst("1"))
   this.分页 = G.long.max(this.分页, BeLong.fromBeConst("0"))
-  Act.self<Device_弹幕排行榜_277>(this).Script__积分榜刷新()
+  Act.self<Device_弹幕排行榜_277>(this).积分榜刷新()
   // --- 隐式返回勿修改
   return
-}
+});
 
 /**
   * name: 按钮点击'排行榜下一页
   * sourcePath: map.map_/277/scripts/按钮点击'排行榜下一页.code
   */
-@BeScript({ name: "按钮点击'排行榜下一页" })
-public Script__X_按钮点击_x27_排行榜下一页(): void {
+public X_按钮点击_x27_排行榜下一页 = BeScript({ name: "按钮点击'排行榜下一页" })(() => {
   // @locals-begin
   // @locals-end
 
   this.分页.addEqual(BeLong.fromBeConst("1"))
-  Act.self<Device_弹幕排行榜_277>(this).Script__积分榜刷新()
+  Act.self<Device_弹幕排行榜_277>(this).积分榜刷新()
   // --- 隐式返回勿修改
   return
-}
+});
 ```
 
 ## 积分榜刷新（核心逻辑）

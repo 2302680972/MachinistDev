@@ -7,37 +7,35 @@
   * name: BarrageHandler'Gift
   * sourcePath: map.map_/54/scripts/BarrageHandler'Gift.code
   */
-@BeScript({ name: "BarrageHandler'Gift" })
-public Script__X_BarrageHandler_x27_Gift(msgObj: BeDict, player: BeStruct): void {
+public X_BarrageHandler_x27_Gift = BeScript({ name: "BarrageHandler'Gift" })((msgObj: BeDict, player: BeStruct) => {
   // @locals-begin
   var context: BeLong
   var giftCount: BeLong
   var giftType: BeString
   // @locals-end
 
-  context = Act.self<Device_弹幕_54>(this).Script__GetContextId()
-  player = Act.self<Device_弹幕_54>(this).Script__X_Player_x27_InfoAutoFill(player)
+  context = Act.self<Device_弹幕_54>(this).GetContextId()
+  player = Act.self<Device_弹幕_54>(this).X_Player_x27_InfoAutoFill(player)
   giftCount = msgObj.read<"BeLong">(BeString.fromBeConst("num"), BeBool.fromBeConst("0"))
   giftType = msgObj.read<"BeString">(BeString.fromBeConst("gift"), BeBool.fromBeConst("0"))
   if (G.long.equal(context, BeLong.fromBeConst("1"))) {
     if (G.string.equal(giftType, BeString.fromBeConst("仙女棒"))) {
-      Act.self<Device_弹幕_54>(this).Script__X_得到礼物_x27_1(giftCount, player)
+      Act.self<Device_弹幕_54>(this).X_得到礼物_x27_1(giftCount, player)
     }
     if (G.string.equal(giftType, BeString.fromBeConst("能力药丸"))) {
-      Act.self<Device_弹幕_54>(this).Script__X_得到礼物_x27_2(giftCount, player)
+      Act.self<Device_弹幕_54>(this).X_得到礼物_x27_2(giftCount, player)
     }
     // ... 其他礼物类型
   }
   // --- 隐式返回勿修改
   return
-}
+});
 
 /**
   * name: 得到礼物'点赞
   * sourcePath: map.map_/54/scripts/得到礼物'点赞.code
   */
-@BeScript({ name: "得到礼物'点赞", color: [112, 0, 255] })
-public Script__X_得到礼物_x27_点赞(count: BeLong, player: BeStruct): void {
+public X_得到礼物_x27_点赞 = BeScript({ name: "得到礼物'点赞", color: [112, 0, 255] })((count: BeLong, player: BeStruct) => {
   // @locals-begin
   var score: BeLong
   var team: BeLong
@@ -68,14 +66,13 @@ public Script__X_得到礼物_x27_点赞(count: BeLong, player: BeStruct): void 
   }
   // --- 隐式返回勿修改
   return
-}
+});
 
 /**
   * name: 平台适配器'更新礼物图
   * sourcePath: map.map_/54/scripts/平台适配器'更新礼物图.code
   */
-@BeScript({ name: "平台适配器'更新礼物图" })
-public Script__X_平台适配器_x27_更新礼物图(布局: BeCanvas, 路径: BeString, 级别: BeLong): void {
+public X_平台适配器_x27_更新礼物图 = BeScript({ name: "平台适配器'更新礼物图" })((布局: BeCanvas, 路径: BeString, 级别: BeLong) => {
   // @locals-begin
   var 图片: BeUIRawImage
   var 礼物图名: BeString
@@ -84,22 +81,22 @@ public Script__X_平台适配器_x27_更新礼物图(布局: BeCanvas, 路径: B
   if (布局.exist()) {
     图片 = 布局.read<"BeUIRawImage">(路径)
     if (图片.exist()) {
-      礼物图名 = Act.self<Device_弹幕_54>(this).Script__X_平台适配器_x27_得到礼物图名(级别)
+      礼物图名 = Act.self<Device_弹幕_54>(this).X_平台适配器_x27_得到礼物图名(级别)
       图片.loadPic(礼物图名)
     }
   }
   // --- 隐式返回勿修改
   return
-}
+});
 
 /**
   * name: 平台适配器'得到礼物图名
   * sourcePath: map.map_/54/scripts/平台适配器'得到礼物图名.code
   */
-@BeScript({ name: "平台适配器'得到礼物图名" })
-public Script__X_平台适配器_x27_得到礼物图名(level: BeLong): BeString {
+public X_平台适配器_x27_得到礼物图名 = BeScript({ name: "平台适配器'得到礼物图名", retVar: "name" })((level: BeLong) => {
   // @locals-begin
   var name: BeString
+  // --- return-separator ---
   // @locals-end
 
   if (G.create.bool(this.X_模式_x27_抖音)) {
@@ -116,11 +113,11 @@ public Script__X_平台适配器_x27_得到礼物图名(level: BeLong): BeString
   }
   // --- 隐式返回勿修改
   return name
-}
+});
 ```
 
 要点：
-- 装饰器使用 `@BeScript({ name: "...", color: [...] })` 格式
+- 脚本声明使用 `BeScript({ name: "...", color: [...] })` 赋值格式
 - 礼物消息从 `msgObj` 中读取 `gift` 和 `num`
 - 根据平台模式返回不同的礼物图名
 - 积分直接修改 `player.get<"BeLong">` 返回的引用即可更新结构

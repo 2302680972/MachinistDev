@@ -7,22 +7,20 @@
   * name: Button_Settlement'RestartGame
   * sourcePath: map.map_/54/scripts/Button_Settlement'RestartGame.code
   */
-@BeScript({ name: "Button_Settlement'RestartGame" })
-public Script__X_Button_Settlement_x27_RestartGame(): void {
+public X_Button_Settlement_x27_RestartGame = BeScript({ name: "Button_Settlement'RestartGame" })(() => {
   // @locals-begin
   // @locals-end
 
   G.map.restartGame()
   // --- 隐式返回勿修改
   return
-}
+});
 
 /**
   * name: Game'Settlement
   * sourcePath: map.map_/54/scripts/Game'Settlement.code
   */
-@BeScript({ name: "Game'Settlement", color: [255, 243, 0], comment: "结算" })
-public Script__X_Game_x27_Settlement(winner: BeLong): void {
+public X_Game_x27_Settlement = BeScript({ name: "Game'Settlement", color: [255, 243, 0], comment: "结算" })((winner: BeLong) => {
   // @locals-begin
   var data: BeDict
   var panel: BeUIButton
@@ -38,12 +36,12 @@ public Script__X_Game_x27_Settlement(winner: BeLong): void {
     v = panel.getCanvasPos()
     data.insert(BeString.fromBeConst("礼物图坐标"), v)
     data.insert(BeString.fromBeConst("LastScorePool"), this.ScorePool)
-    Act.self<Device_弹幕_54>(this).Script__X_UI_x27_EnterSettlement(winner)
+    Act.self<Device_弹幕_54>(this).X_UI_x27_EnterSettlement(winner)
     settled = G.create.bool(BeBool.fromBeConst("1"))
   }
   // --- 隐式返回勿修改
   return
-}
+});
 ```
 
 创建结算页的核心部分：
@@ -61,7 +59,7 @@ id列表 = this.PlayerMap.names()
 ```
 
 要点：
-- 装饰器使用 `@BeScript({ name: "...", color: [...], comment: "..." })` 格式
+- 脚本声明使用 `BeScript({ name: "...", color: [...], comment: "..." })` 赋值格式
 - `G.map.restartGame()` 重启游戏
 - `G.create.canvas(BeCanvas.fromBeConst("guid:..."))` 通过 GUID 创建 Canvas
 - 结算时保存数据到存档

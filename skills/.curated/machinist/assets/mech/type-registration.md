@@ -9,8 +9,7 @@
   * name: Bullet'RegisterBulletType
   * sourcePath: map.map_/329/scripts/Bullet'RegisterBulletType.code
   */
-@BeScript({ name: "Bullet'RegisterBulletType", comment: "注册子弹实体" })
-public Script__X_Bullet_x27_RegisterBulletType($bulletType: BeString, $modelKey: BeString, $teamLimit: BeLong, $globalLimit: BeLong): void {
+public X_Bullet_x27_RegisterBulletType = BeScript({ name: "Bullet'RegisterBulletType", comment: "注册子弹实体" })(($bulletType: BeString, $modelKey: BeString, $teamLimit: BeLong, $globalLimit: BeLong) => {
   // @locals-begin
   var $zero: BeLong
   var $bulletInfo: BeStruct
@@ -27,7 +26,7 @@ public Script__X_Bullet_x27_RegisterBulletType($bulletType: BeString, $modelKey:
   this.BulletRegInfo.set($bulletType, $bulletInfo)
   // --- 隐式返回勿修改
   return
-}
+});
 ```
 
 ## 注册模型类型
@@ -37,8 +36,7 @@ public Script__X_Bullet_x27_RegisterBulletType($bulletType: BeString, $modelKey:
   * name: Bullet'RegisterModelType
   * sourcePath: map.map_/329/scripts/Bullet'RegisterModelType.code
   */
-@BeScript({ name: "Bullet'RegisterModelType", comment: "注册模型" })
-public Script__X_Bullet_x27_RegisterModelType($key: BeString): void {
+public X_Bullet_x27_RegisterModelType = BeScript({ name: "Bullet'RegisterModelType", comment: "注册模型" })(($key: BeString) => {
   // @locals-begin
   var $bullet: BeList
   var $bulletUnused: BeList
@@ -54,7 +52,7 @@ public Script__X_Bullet_x27_RegisterModelType($key: BeString): void {
   }
   // --- 隐式返回勿修改
   return
-}
+});
 ```
 
 ## 注册礼物模型类型
@@ -64,8 +62,7 @@ public Script__X_Bullet_x27_RegisterModelType($key: BeString): void {
   * name: GiftModel'RegisterType
   * sourcePath: map.map_/329/scripts/GiftModel'RegisterType.code
   */
-@BeScript({ name: "GiftModel'RegisterType", comment: "注册类型" })
-public Script__X_GiftModel_x27_RegisterType($modelKey: BeString): void {
+public X_GiftModel_x27_RegisterType = BeScript({ name: "GiftModel'RegisterType", comment: "注册类型" })(($modelKey: BeString) => {
   // @locals-begin
   var $bullet: BeList
   var $bulletUnused: BeList
@@ -81,10 +78,10 @@ public Script__X_GiftModel_x27_RegisterType($modelKey: BeString): void {
   }
   // --- 隐式返回勿修改
   return
-}
+});
 ```
 
 要点：
-- 装饰器使用 `@BeScript({ name: "...", comment: "..." })` 格式
+- 使用 `BeScript({ name: "...", comment: "..." })` 赋值格式
 - 注册时创建两个列表：一个存放所有实例，一个存放未使用的实例
 - 使用 `contains` 检查是否已注册，避免重复注册
