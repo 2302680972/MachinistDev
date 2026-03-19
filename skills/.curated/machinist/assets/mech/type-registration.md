@@ -14,18 +14,17 @@ public X_Bullet_x27_RegisterBulletType = BeScript({ name: "Bullet'RegisterBullet
   var $zero: BeLong
   var $bulletInfo: BeStruct
   // @locals-end
-
-  $zero = G.create.long(BeLong.fromBeConst("0"))
-  $bulletInfo = G.create.struct()
-  $bulletInfo.set(BeString.fromBeConst("modelKey"), $modelKey)
-  $bulletInfo.set(BeString.fromBeConst("teamLimit"), $teamLimit)
-  $bulletInfo.set(BeString.fromBeConst("team1Current"), $zero)
-  $bulletInfo.set(BeString.fromBeConst("team2Current"), $zero)
-  $bulletInfo.set(BeString.fromBeConst("globalLimit"), $globalLimit)
-  $bulletInfo.set(BeString.fromBeConst("globalCurrent"), $zero)
-  this.BulletRegInfo.set($bulletType, $bulletInfo)
+  $zero = G.create.long(BeLong.fromBeConst("0"));
+  $bulletInfo = G.create.struct();
+  $bulletInfo.set(BeString.fromBeConst("modelKey"), $modelKey);
+  $bulletInfo.set(BeString.fromBeConst("teamLimit"), $teamLimit);
+  $bulletInfo.set(BeString.fromBeConst("team1Current"), $zero);
+  $bulletInfo.set(BeString.fromBeConst("team2Current"), $zero);
+  $bulletInfo.set(BeString.fromBeConst("globalLimit"), $globalLimit);
+  $bulletInfo.set(BeString.fromBeConst("globalCurrent"), $zero);
+  this.BulletRegInfo.set($bulletType, $bulletInfo);
   // --- 隐式返回勿修改
-  return
+  return;
 });
 ```
 
@@ -42,16 +41,15 @@ public X_Bullet_x27_RegisterModelType = BeScript({ name: "Bullet'RegisterModelTy
   var $bulletUnused: BeList
   var $exist: BeBool
   // @locals-end
-
-  $bullet = G.create.listN()
-  $bulletUnused = G.create.listN()
-  $exist = this.Bullet.contains($key)
+  $bullet = G.create.listN();
+  $bulletUnused = G.create.listN();
+  $exist = this.Bullet.contains($key);
   if (G.bool.not($exist)) {
-    this.Bullet.set($key, $bullet)
-    this.BulletUnused.set($key, $bulletUnused)
+    this.Bullet.set($key, $bullet);
+    this.BulletUnused.set($key, $bulletUnused);
   }
   // --- 隐式返回勿修改
-  return
+  return;
 });
 ```
 
@@ -68,16 +66,15 @@ public X_GiftModel_x27_RegisterType = BeScript({ name: "GiftModel'RegisterType",
   var $bulletUnused: BeList
   var $exist: BeBool
   // @locals-end
-
-  $bullet = G.create.listN()
-  $bulletUnused = G.create.listN()
-  $exist = this.Bullet.contains($modelKey)
+  $bullet = G.create.listN();
+  $bulletUnused = G.create.listN();
+  $exist = this.Bullet.contains($modelKey);
   if (G.bool.not($exist)) {
-    this.Bullet.set($modelKey, $bullet)
-    this.BulletUnused.set($modelKey, $bulletUnused)
+    this.Bullet.set($modelKey, $bullet);
+    this.BulletUnused.set($modelKey, $bulletUnused);
   }
   // --- 隐式返回勿修改
-  return
+  return;
 });
 ```
 

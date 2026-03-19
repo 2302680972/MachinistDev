@@ -7,18 +7,16 @@
 ```ts
 /**
   * name: Public'SetLayer
-  * sourcePath: map.map_/329/scripts/Public'SetLayer.code
+  * sourcePath: 机械/基地.mech_/0/scripts/Public'SetLayer.code
   */
-@BeScript({ name: "Public'SetLayer" })
-public Script__X_Public_x27_SetLayer(layer1: BeFloat, layer2: BeFloat): void {
+protected X_Public_x27_SetLayer = BeScript({ name: "Public'SetLayer", private: true })(($layer: BeFloat) => {
   // @locals-begin
   // @locals-end
-
-  Act.self<Device_anonymous_0>(this).setLayer(layer1)
-  Act.byName<Device_攻击判定_8>("攻击判定").setLayer(layer2)
+  G.float.add($layer, BeFloat.fromBeConst("0"));
+  //|点击这里写注释
   // --- 隐式返回勿修改
-  return
-}
+  return;
+});
 ```
 
 ## 获取碰撞层列表
@@ -28,25 +26,26 @@ public Script__X_Public_x27_SetLayer(layer1: BeFloat, layer2: BeFloat): void {
   * name: 粒子'得到碰撞层列表
   * sourcePath: map.map_/329/scripts/粒子'得到碰撞层列表.code
   */
-@BeScript({ name: "粒子'得到碰撞层列表" })
-public Script__X_粒子_x27_得到碰撞层列表(): BeList {
+public X_粒子_x27_得到碰撞层列表 = BeScript({ name: "粒子'得到碰撞层列表", retVar: "$list" })(() => {
   // @locals-begin
-  var layer1: BeFloat
-  var list: BeList
-  var init: BeBool
+  var $list: BeList
+  // --- return-separator ---
+  var $layer1: BeFloat
+  var $layer2: BeFloat
+  var $init: BeBool
   // @locals-end
-
-  if (G.bool.not(init)) {
-    layer1 = G.create.float(BeFloat.fromBeConst("0"))
-    list = G.create.listN(layer1)
-    init = G.create.bool(BeBool.fromBeConst("1"))
+  if (G.bool.not($init)) {
+    $layer1 = G.create.float(BeFloat.fromBeConst("0"));
+    $layer2 = G.create.float(BeFloat.fromBeConst("7"));
+    $list = G.create.listN($layer1, $layer2);
+    $init = G.create.bool(BeBool.fromBeConst("1"));
   }
   // --- 隐式返回勿修改
-  return list
-}
+  return $list;
+});
 ```
 
 要点：
-- 装饰器使用 `@BeScript({ name: "..." })` 格式
+- 使用 `BeScript({ name: "..." })` 赋值格式
 - `setLayer` 设置零件的碰撞层
 - 碰撞层列表用于粒子检测等场景

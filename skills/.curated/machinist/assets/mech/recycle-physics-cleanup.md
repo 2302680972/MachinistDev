@@ -14,13 +14,12 @@ public X_Bullet_x27_OnReclaim = BeScript({ name: "Bullet'OnReclaim", color: [0, 
   var $key: BeString
   var $unused: BeList
   // @locals-end
-
-  $key = G.create.string($modelType)
-  $unused = this.BulletUnused.get<"BeList">($key, BeBool.fromBeConst("0"))
-  $unused.add($obj)
-  $obj.setActive(BeBool.fromBeConst("0"))
+  $key = G.create.string($modelType);
+  $unused = this.BulletUnused.get<BeList>($key, BeBool.fromBeConst("0"));
+  $unused.add($obj);
+  $obj.setActive(BeBool.fromBeConst("0"));
   // --- 隐式返回勿修改
-  return
+  return;
 });
 ```
 
@@ -35,12 +34,11 @@ public X_GiftModel_x27_OnReclaim = BeScript({ name: "GiftModel'OnReclaim", color
   // @locals-begin
   var $unused: BeList
   // @locals-end
-
-  $unused = this.BulletUnused.get<"BeList">($modelKey, BeBool.fromBeConst("0"))
-  $unused.add($obj)
-  $obj.setActive(BeBool.fromBeConst("0"))
+  $unused = this.BulletUnused.get<BeList>($modelKey, BeBool.fromBeConst("0"));
+  $unused.add($obj);
+  $obj.setActive(BeBool.fromBeConst("0"));
   // --- 隐式返回勿修改
-  return
+  return;
 });
 ```
 
@@ -59,18 +57,18 @@ public X_Bullet_x27_ForceReclaimByModel = BeScript({ name: "Bullet'ForceReclaimB
   var $value: BeFloat
   var $faction: BeLong
   // @locals-end
-
-  $bullet = this.Bullet.get<"BeList">($key, BeBool.fromBeConst("0"))
-  $index = $bullet.count()
+  $bullet = this.Bullet.get<BeList>($key, BeBool.fromBeConst("0"));
+  $index = $bullet.count();
   while (G.float.gt($index, BeFloat.fromBeConst("0"))) {
-    $index.minusEqual(BeFloat.fromBeConst("1"))
-    $obj = $bullet.read<"BeMech">($index)
-    $value = G.create.float(BeFloat.fromBeConst("99999"))
-    $faction = G.create.long(BeLong.fromBeConst("0"))
-    $obj.callFun(BeString.fromBeConst("Public'Damage"), $value, $faction)
+    $index.minusEqual(BeFloat.fromBeConst("1"));
+    $obj = $bullet.read<BeMech>($index);
+    /* $obj.callFun(BeString.fromBeConst("Public'ForceReclaim")); */
+    $value = G.create.float(BeFloat.fromBeConst("99999"));
+    $faction = G.create.long(BeLong.fromBeConst("0"));
+    $obj.callFun(BeString.fromBeConst("Public'Damage"), $value, $faction);
   }
   // --- 隐式返回勿修改
-  return
+  return;
 });
 ```
 
@@ -84,12 +82,17 @@ public X_Bullet_x27_ForceReclaimByModel = BeScript({ name: "Bullet'ForceReclaimB
 public X_Bullet_x27_ForceReclaimAll = BeScript({ name: "Bullet'ForceReclaimAll", color: [0, 138, 255], comment: "强制回收全部子弹" })(() => {
   // @locals-begin
   // @locals-end
-
-  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("0"))
-  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("1"))
-  // ... 其他模型类型
+  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("0"));
+  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("1"));
+  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("20"));
+  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("30"));
+  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("40"));
+  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("41"));
+  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("50"));
+  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("51"));
+  Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("60"));
   // --- 隐式返回勿修改
-  return
+  return;
 });
 ```
 

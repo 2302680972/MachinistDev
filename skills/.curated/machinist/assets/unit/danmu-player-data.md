@@ -3,17 +3,20 @@
 摘录自示例工程的 TS 视图片段，用于对照"弹幕玩家数据读取与处理"的写法。
 
 ```ts
-public Script__X_BarrageHandler_x27_Like($msgObj: BeDict): void {
-  var $uid: BeString
-  var $player: BeStruct
-  var $likeCount: BeLong
-
-  $uid = $msgObj.read<"BeString">(BeString.fromBeConst("uid"), BeBool.fromBeConst("0"))
-  $player = this.PlayerMap.read<"BeStruct">($uid, BeBool.fromBeConst("0"))
-  $player = Act.self<Device_弹幕_54>(this).Script__X_Player_x27_InfoAutoFill($player, $msgObj)
-  $likeCount = $msgObj.read<"BeLong">(BeString.fromBeConst("likes"), BeBool.fromBeConst("0"))
-  Act.self<Device_弹幕_54>(this).Script__X_得到礼物_x27_点赞($likeCount, $player)
-}
+/**
+  * name: 弹幕处理'点赞
+  * sourcePath: map.map_/54/scripts/弹幕处理'点赞.code
+  */
+public X_弹幕处理_x27_点赞 = BeScript({ name: "弹幕处理'点赞", color: [255, 255, 255] })((点赞数量: BeLong, 玩家: BeStruct) => {
+  // @locals-begin
+  // @locals-end
+  if (G.create.bool(this.X_局内功能设置_x27_自动下场)) {
+    Act.self<Device_弹幕_54>(this).X_玩家_x27_自动下场检查(玩家);
+  }
+  Act.self<Device_弹幕_54>(this).X_得到礼物_x27_点赞(点赞数量, 玩家);
+  // --- 隐式返回勿修改
+  return;
+});
 ```
 
 要点：

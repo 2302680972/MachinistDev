@@ -32,7 +32,7 @@ public X_UI_Tip_x27_Animation = BeScript({ name: "UI_Tip'Animation" })(() => {
     this.X_Tip_x27_AniActivate = G.create.bool(BeBool.fromBeConst("0"))
     G.script.skip()
   }
-  // @ts-ignore --- 隐式返回勿修改
+  // --- 隐式返回勿修改
   return
 });
 ```

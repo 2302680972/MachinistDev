@@ -45,7 +45,7 @@ public X_Generic_x27_PlayVideo = BeScriptAsync({ name: "Generic'PlayVideo", retV
     await G.delay(G.create.float(BeFloat.fromBeConst("0")))
   }
   UI.del(BeFloat.fromBeConst("0"))
-  // @ts-ignore --- 隐式返回勿修改
+  // --- 隐式返回勿修改
   return ret
 });
 ```

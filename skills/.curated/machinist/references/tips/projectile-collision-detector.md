@@ -39,26 +39,26 @@
 单位（高频/可重复）常见写法是“Key -> Map + Unused 列表”：Key 命中就复用，不命中才新建；回收时从 Map 移除并放回 Unused：
 
 ```ts
-$key = G.create.string($pos)
-$available = this.UnusedGrid.count()
-$unusedExist = G.float.gt($available, BeFloat.fromBeConst("0"))
+$key = G.create.string($pos);
+$available = this.UnusedGrid.count();
+$unusedExist = G.float.gt($available, BeFloat.fromBeConst("0"));
 if (G.create.bool($unusedExist)) {
 }
-$index = G.float.minus($available, BeFloat.fromBeConst("1"))
-$obj = this.UnusedGrid.read<"BeMech">($index)
-$obj.move($pos, BeEnum.fromBeConst("0"))
-this.UnusedGrid.remove($index)
-this.GridMap.insert($key, $obj)
+$index = G.float.minus($available, BeFloat.fromBeConst("1"));
+$obj = this.UnusedGrid.read<BeMech>($index);
+$obj.move($pos, BeEnum.fromBeConst<MechPositionAlignment>(MechPositionAlignment.Core));
+this.UnusedGrid.remove($index);
+this.GridMap.insert($key, $obj);
 if (G.bool.not($unusedExist)) {
 }
-$obj = Act.self<Device_Scenario_329>(this).X_Grid_x27_New($pos)
+$obj = Act.self<Device_Scenario_329>(this).X_Grid_x27_New($pos);
 ```
 
 ```ts
-$obj = this.GridMap.read<"BeMech">($key, BeBool.fromBeConst("1"))
-this.GridMap.remove($key)
-this.UnusedGrid.add($obj)
-$obj.callFun(BeString.fromBeConst("Public'OnReclaim"))
+$obj = this.GridMap.read<BeMech>($key, BeBool.fromBeConst("1"));
+this.GridMap.remove($key);
+this.UnusedGrid.add($obj);
+$obj.callFun(BeString.fromBeConst("Public'OnReclaim"));
 ```
 
 说明：上面的示例里出现的 `mech.move(...)` 属于旧写法展示，不要照搬移动方式；移动规则见“回收与移动（硬性注意点）”。

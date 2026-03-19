@@ -49,10 +49,10 @@
 示例片段（展示“按时间推进 + 渐变 + 结束删除”的写法）：
 
 ```ts
-@bsName("Generic'PlayVideo")
-public Script__X_Generic_x27_PlayVideo(name1: BeString, UI: BeUIRawImage): BeBool {
+public X_Generic_x27_PlayVideo = BeScript({ name: "Generic'PlayVideo", retVar: "ret" })((name1: BeString, UI: BeUIRawImage) => {
   // @locals-begin
   var ret: BeBool
+  // --- return-separator ---
   var 当前颜色: BeColor
   var 视频信息: BeStruct
   var duration: BeFloat
@@ -62,33 +62,31 @@ public Script__X_Generic_x27_PlayVideo(name1: BeString, UI: BeUIRawImage): BeBoo
   var timeUsed: BeFloat
   var 按住按键: BeBool
   // @locals-end
-
-  ret = G.create.bool(BeBool.fromBeConst("0"))
-  if (Act.self<Device_玩家入场_312>(this).Script__callClientMapRet<"BeBool">(BeString.fromBeConst("弹幕.IsInGame"))) {
-    当前颜色 = G.create.color(BeColor.fromBeConst("255,255,255,0"))
-    视频信息 = UI.setVideo(name1)
-    duration = 视频信息.get<"BeFloat">(BeString.fromBeConst("time"), BeBool.fromBeConst("0"))
-    timeStart = G.time.time()
-    X_continue = G.create.bool(BeBool.fromBeConst("1"))
-    while (G.create.bool(X_continue)) {
-      time = G.time.time()
-      timeUsed = G.float.minus(time, timeStart)
-      按住按键 = G.keyboard.keyHeld2(BeEnum.fromBeConst("6"))
-      if (G.create.bool(按住按键)) {
-        当前颜色 = 当前颜色.lerp(BeColor.fromBeConst("255,255,255,0"), BeFloat.fromBeConst("0.1"))
-      }
-      if (G.bool.not(按住按键)) {
-        当前颜色 = 当前颜色.lerp(BeColor.fromBeConst("255,255,255,255"), BeFloat.fromBeConst("0.1"))
-      }
-      UI.setColor(当前颜色)
-      X_continue = G.float.lt(timeUsed, duration)
-      G.delay(G.create.float(BeFloat.fromBeConst("0")))
+  ret = G.create.bool(BeBool.fromBeConst("0"));
+  当前颜色 = G.create.color(BeColor.fromBeConst("255,255,255,0"));
+  视频信息 = UI.setVideo(name1, undefined);
+  duration = 视频信息.get<BeFloat>(BeString.fromBeConst("time"), BeBool.fromBeConst("0"));
+  timeStart = G.time.time();
+  X_continue = G.create.bool(BeBool.fromBeConst("1"));
+  while (G.create.bool(X_continue)) {
+    time = G.time.time();
+    timeUsed = G.float.minus(time, timeStart);
+    按住按键 = G.keyboard.keyHeld2(BeEnum.fromBeConst<KeyCode>(KeyCode.Space));
+    if (G.create.bool(按住按键)) {
+      当前颜色 = 当前颜色.lerp(BeColor.fromBeConst("255,255,255,0"), BeFloat.fromBeConst("0.1"));
     }
-    G.delay(G.create.float(BeFloat.fromBeConst("0")))
+    if (G.bool.not(按住按键)) {
+      当前颜色 = 当前颜色.lerp(BeColor.fromBeConst("255,255,255,255"), BeFloat.fromBeConst("0.1"));
+    }
+    UI.setColor(当前颜色);
+    X_continue = G.float.lt(timeUsed, duration);
+    await G.delay(G.create.float(BeFloat.fromBeConst("0")));
   }
-  UI.del(BeFloat.fromBeConst("0"))
-  return ret
-}
+  await G.delay(G.create.float(BeFloat.fromBeConst("0")));
+  UI.del(BeFloat.fromBeConst("0"));
+  // --- 隐式返回勿修改
+  return ret;
+});
 ```
 
 要点：用 `time.time()` 推进进度；用 `lerp` 做渐变；循环末尾 `del` 收尾并结束。
@@ -97,8 +95,7 @@ public Script__X_Generic_x27_PlayVideo(name1: BeString, UI: BeUIRawImage): BeBoo
 示例片段（展示 `SmoothStep` + `clamp` + 结束退出）：
 
 ```ts
-@bsName("UI_Tip'Animation")
-public Script__X_UI_Tip_x27_Animation(): void {
+public X_UI_Tip_x27_Animation = BeScript({ name: "UI_Tip'Animation" })(() => {
   // @locals-begin
   var 当前时间: BeFloat
   var 已用时间: BeFloat
@@ -106,22 +103,23 @@ public Script__X_UI_Tip_x27_Animation(): void {
   var 插值: BeFloat
   var 转动: BeVector3
   // @locals-end
-
-  当前时间 = G.time.time()
-  已用时间 = G.float.minus(当前时间, this.X_Tip_x27_AniStart)
-  比例 = G.float.division(已用时间, BeFloat.fromBeConst("0.5"))
-  比例 = G.float.clamp(比例, BeFloat.fromBeConst("0"), BeFloat.fromBeConst("1"))
-  插值 = G.float.SmoothStep(BeFloat.fromBeConst("-180"), BeFloat.fromBeConst("0"), 比例)
+  当前时间 = G.time.time();
+  已用时间 = G.float.minus(当前时间, this.X_Tip_x27_AniStart);
+  比例 = G.float.division(已用时间, BeFloat.fromBeConst("0.5"));
+  比例 = G.float.clamp(比例, BeFloat.fromBeConst("0"), BeFloat.fromBeConst("1"));
+  插值 = G.float.SmoothStep(BeFloat.fromBeConst("-180"), BeFloat.fromBeConst("0"), 比例);
   if (G.float.lt(比例, BeFloat.fromBeConst("0.5"))) {
-    插值 = G.float.add(插值, BeFloat.fromBeConst("180"))
+    插值 = G.float.add(插值, BeFloat.fromBeConst("180"));
   }
-  转动 = G.creatVariable.Vector3(BeFloat.fromBeConst("0"), 插值, BeFloat.fromBeConst("0"))
-  this.X_Tip_x27_MainPanel.rot3D(转动)
+  转动 = G.creatVariable.Vector3(BeFloat.fromBeConst("0"), 插值, BeFloat.fromBeConst("0"));
+  this.X_Tip_x27_MainPanel.rot3D(转动);
   if (G.float.gte(比例, BeFloat.fromBeConst("1"))) {
-    this.X_Tip_x27_AniActivate = G.create.bool(BeBool.fromBeConst("0"))
-    G.script.skip()
+    this.X_Tip_x27_AniActivate = G.create.bool(BeBool.fromBeConst("0"));
+    G.script.skip();
   }
-}
+  // --- 隐式返回勿修改
+  return;
+});
 ```
 
 要点：`clamp` 先把进度锁在 0~1；`SmoothStep` 负责非线性；结束后 `script.skip()` 防止“无限挂循环”。
