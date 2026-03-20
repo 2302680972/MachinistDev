@@ -2,6 +2,8 @@
 
 ## 必读规则
 
+本文档保存为两份: AGENTS.md和CLAUDE.md 这是有意设计的不是所谓冗余,若排查冗余应该跳过此文件
+
 ### 开发场景
 
 - 本工作区是CreatAI平台的游戏工程
@@ -28,6 +30,7 @@
         - 若写入工程使用的代码等专用格式,务必遵守规范使用`patch_mech_view`和`refactor_*`等工具.
         - 若写入普通文本比如Markdown格式,则任意使用原生工具,无强制使用特定工具的约束.但不要假设`patch_mech_view`等能够编辑这些无关文本.
         - 绝对禁区: 严禁使用Python和sed直接编辑code/canvas/ts/html文件! 滥用无关工具将会导致严重的破坏!
+        - 绝对绝对禁止直接越过工具手动改code!!!无论遇到多大的困难!
 
 ### 代码风格要求
 
@@ -75,6 +78,9 @@
     - TS视图: 使用受限TS语法便于读写的文件.TS与原始BeScript的`.code`文件不同,以零件为范围进行聚合,并映射为一个类.
         - TS视图当中按照实际运行时会持有的内容进行展示,所以链接的独立脚本会直接转为视图中的方法,这些独立脚本被称为coderepo; coderepo在被链接时,相应零件的TS视图当中是完整的代码,与非独立脚本区别不大.
         - CodeRepo有一个独立的只读TS视图,这个视图仅用于辅助理解链接关系和提供语法约束,禁止尝试修改此文件(也不在可修改的范围内)
+        - TS视图的路径规则为: 地图在视图目录所对应的位置的直接下级
+            - 示例: `temp/toolkit/views/玩法地图.map_/327.ts` 对应`玩法地图.map_/327`零件
+            - 示例: `temp/toolkit/views/机械/辅助调度器.mech_/0.ts` 对应`机械/辅助调度器.mech_/0`零件
 - BeScript表达式和调用规则:
     - 脚本组: 在零件当中存在多个脚本组,分为事件(`event_*`)和自定义方法(`scripts`),其中事件的签名完全固定,而自定义方法则可以自定义签名.
     - 事件脚本和自定义脚本:
@@ -113,7 +119,8 @@
                 - retVar: 返回值变量名(BeScript当中的写法)
             - 自定义脚本: `public 属性名 = BeScript({ name: "原名" })((参数) => { 方法体 });`
             - 事件脚本: 使用`EventGroup`声明,按事件类型分组,成员为`BeScript`调用
-            - 含delay的异步脚本使用`BeScriptAsync`+`async`箭头函数
+            - 事件脚本组: 外壳禁止修改或删除,表明这是零件类的固有结构!若需删除事件脚本,则必须只能删除脚本本身的定义,而事件脚本组的外壳必须保留!即使是空的壳子也必须保留!
+            - 含delay的异步脚本使用`BeScriptAsync`+`async`箭头函数(但 BeScriptAsync 会根据返回值进行改写)
         - @events(...)装饰器: 声明零件上的合法事件列表,此装饰器自动生成不得删除
         - 有意设计的缺陷标记:
             - TS视图当中会使用一些明显有语法错误或者语义明确有问题的格式表达BeScript当中的错误.新增内容中不得出现类似的错误
@@ -139,6 +146,10 @@
     - 动态调用参数规则:
         - 指定零件动态调用方法时,直接填方法的`原始BeScript名称`!比如`UI'清空`这个名称绝对不可以乱填什么`X_UI_x27_清空`
         - 使用调用地图方法逻辑比如`callClientMapRet(分机+有返回值)`和`callMapClientCoreAct(分机方块无返回)`和`callMapCoreAct(主机方块无返回)`,都需要使用`零件逻辑名.原始BeScript名称`的格式比如`UI'清空`应写为形如`UI管理模块.UI'清空`
+    - 为什么TS和BeScript方法名不一样: 
+        - 方法组压缩: 在生成TS视图时有压缩机制,底层方法已经被转义和优化了表达形式.
+        - TS转义: 避免TS语法不支持
+        - TS视图上方法和对应的原始code不是完全一样是完全正常的,不要在这种事情上面纠结!正常编辑TS视图即可,工具会辅助你把TS视图转回合适的原始code内容
 - 变量/常量规则:
     - 变量
         - 变量有状态,可被Struct有状态地绑定.推荐在读Struct时选择复制
@@ -203,9 +214,19 @@
         - 地图当中可以生成的最大机械数量的最大值是99999,这个值初始是50,可通过设置调整
     - 文本相关:
         - 文本高级拼接当中的占位符是`%+数字`,从%1开始.
+        - 建议使用高级拼接输出日志
+        - 翻译功能:
+            - 需要一个翻译表excel,有id/name/cn
+            /en列
+            - 翻译功能: 直接按name查表
+            - 高级翻译: 按name查表的同时,自带高级拼接(需要翻译表条目带`%1`这种格式)
+            - 静态Canvas翻译(不推荐): `@`+name值.比如`@名称ABC`则表示查表后把当前语言`名称ABC`对应的翻译值显示在UI组件的文本内容上. 此特性不够灵活,不推荐使用
     - 颜色格式:
         - 常量颜色是按0~255计算.0~255范围的颜色文本应尽量抹去小数点后的部分.
-        - BeColor的rgba的Get和Set均为0~1范围,而不是标准的0~255,需进行换算
+        - 易混淆点: 
+            - Canvas当中的静态的颜色按[0,255]范围指定值
+            - BeScript和TS当中的Color常量也是按[0,255]范围指定值
+            - 但是,BeColor的rgba的Get和Set均为0~1范围,而不是标准的0~255,需进行换算
         - `#RRGGBB`这种格式仅在富文本标签里面允许添加,其他地方并不支持
     - 帧相关:
         - 游戏分为图形帧和物理帧
@@ -233,47 +254,78 @@
 
 ### Canvas格式和Html视图规范
 
+#### Canvas文件规范
+
+- 不推荐大量存在内联Canvas,大量内联Canvas不便管理且会导致视图混乱,应尽量导出
+- Canvas本身的名称应该与文件名称保持一致性,否则会导致语义上的混乱
 - Canvas是二进制内容,禁止直接读和写.一切修改均应该通过Html视图间接完成
-- 属性规范
-    - Schema应参考`temp/toolkit/canvas_render/CanvasRenderLayout.ts`当中的明确类型定义,而不是无依据地瞎猜!
-    - 冗余或者缺失必要属性都可能导致错误!
-    - 属性应符合规范,不要尝试乱猜属性的用处,渲染引擎已明确介绍用处就不要瞎猜!
 - 创建独立Canvas文件的方法:
     1. 当前无直接创建Canvas文件的方法,但可以间接创建
     2. 以`patch_mech_view`在一个方法里面声明内联的canvas行.此时Canvas以内联形式存在
     3. 选择刚创建内联canvas的方法,精准定位那个新增行,将canvas导出
     4. 完成导出后,以独立文件形式存在,继续在HTML文件上`patch_mech_view`
-- 不推荐大量存在内联Canvas,大量内联Canvas不便管理且会导致视图混乱,应尽量导出
-- Canvas本身的名称应该与文件名称保持一致性,否则会导致语义上的混乱
-- 要非常小心canvas的错位问题!要注意对齐方式
+- 编辑后应读图确认: 修改过canvas之后,读图确认真实结果,要整齐美观无错乱!
+
+#### 属性规范
+
+- Schema应参考`temp/toolkit/canvas_render/CanvasRenderLayout.ts`当中的明确类型定义,而不是无依据地瞎猜!
+- 冗余或者缺失必要属性都可能导致错误!
+- 属性应符合规范,不要尝试乱猜属性的用处,渲染引擎已明确介绍用处就不要瞎猜!
 - Vector3类型参数位置的z轴不要乱填(必须对齐原版格式,虽然那个值并无效果)
+
+#### 节点类型规范(Canvas的UI节点与BeScript的变量类型映射,读取必须遵守此规则)
+
+- Canvas UIRect -> BeScript UIRect (TS BeUIRect)
+- Canvas UIButton -> BeScript UIButton (TS BeUIButton)
+- Canvas UILabel -> BeScript UILabel (TS BeUILabel)
+- Canvas TextPro -> BeScript UILabel (TS BeUILabel)
+- Canvas UIInput -> BeScript UIInput (TS BeUIInput)
+- Canvas UIRawImage -> BeScript UIRawImage (TS BeUIRawImage)
+- Canvas ScrollRect -> BeScript UIRect (TS BeUIRect)
+
+#### 计算规则
+
+##### 布局计算
+
+###### 父空间和对齐方式
+
+- 均设置为9枚举
+- 坐标与常见HTML坐标计算完全不同: y轴固定朝上,x轴固定朝右.坐标和尺寸计算中坐标轴均来自父级.在旋转后,子级x轴y轴会有相应变动!
+- 父空间决定父级的(0,0)在哪里.但是x轴y轴方向不会变,都是一样的计算方式.不同的父空间会导致可以预测的固定坐标偏移量(取决于父级尺寸)
+- 对齐方式决定自身的原点是在哪个位置,同样地x轴y轴不会变.不同的对齐方式会导致可以预测的固定坐标偏移量(取决于自身尺寸)
+- 要非常小心canvas的错位问题,父空间和对齐方式如果写错会导致大量的隐蔽问题
+
+###### 尺寸计算
+
+- 绝对: 直接指定像素数
+- 比例: 父级的比例(>0&&<=1)
+- 边距: 取决于父空间和对齐方式.具体逻辑可以参考`temp/toolkit/canvas_render/CanvasRenderLayout.ts`了解具体底层原理
 - 若要做全屏填充,要么父级是全屏时直接按比例计算,要么固定设置远超屏幕大小的绝对尺寸.禁止硬编码(1080*2160)尺寸充当全屏的设计
-- 父空间和对齐方式:
-    - 均设置为9枚举
-    - 坐标与常见HTML坐标计算完全不同: y轴固定朝上,x轴固定朝右.坐标和尺寸计算中坐标轴均来自父级.在旋转后,子级x轴y轴会有相应变动!
-    - 父空间决定父级的(0,0)在哪里.但是x轴y轴方向不会变,都是一样的计算方式.不同的父空间会导致可以预测的固定坐标偏移量(取决于父级尺寸)
-    - 对齐方式决定自身的原点是在哪个位置,同样地x轴y轴不会变.不同的对齐方式会导致可以预测的固定坐标偏移量(取决于自身尺寸)
-- 尺寸计算:
-    - 绝对: 直接指定像素数
-    - 比例: 父级的比例(>0&&<=1)
-    - 边距: 取决于父空间和对齐方式.具体逻辑可以参考`temp/toolkit/canvas_render/CanvasRenderLayout.ts`了解具体底层原理
-    - 排版模式的网格模式会强制限制子级长宽.横向/纵向模式则禁用边距模式,子组件本身尺寸仍有效
-- 旋转:
-    - 填顺时针旋转角度(任意大小角度值而非"弧度值等等")
+
+###### 排版
+
+- 格子排版: 重排全部的子UI的位置,设置子UI组件的尺寸为固定像素值
+- 横向排版: 不约束子UI尺寸,但子UI尺寸的计算方式受限,必须是固定像素或者比例值
+- 纵向排版: 同样地限制计算方式
+- 排版模式的网格模式会强制限制子级长宽.横向/纵向模式则禁用边距模式,子组件本身尺寸仍有效
+
+###### 杂项
+- 旋转: 填顺时针旋转角度(任意大小角度值而非"弧度值等等")
 - 厚度效果:
     - 方框/按钮等等类型的厚度为-1或者0会导致全填充
     - 正数厚度则按照厚度值向内填充描边,没覆盖到的就是纯透明
+
+##### 颜色
+
+- 颜色决定整个组件的颜色显示,决定方框填充色,也决定九宫格等图片颜色(正片叠底)
+- 多个颜色来源时,通常是正片叠底: 组件整体颜色×属性独有颜色=属性本身最终生效值
+- 设置UI组件时,颜色范围是[0,255]
+
+##### 其他特性
+
 - 富文本标签支持:
     - <size=XXX> 字号 </size>
     - <color=#RRGGBB> 颜色 </color>
-- Canvas的UI节点与BeScript的变量类型映射(读取必须遵守此规则):
-    - Canvas UIRect -> BeScript UIRect (TS BeUIRect)
-    - Canvas UIButton -> BeScript UIButton (TS BeUIButton)
-    - Canvas UILabel -> BeScript UILabel (TS BeUILabel)
-    - Canvas TextPro -> BeScript UILabel (TS BeUILabel)
-    - Canvas UIInput -> BeScript UIInput (TS BeUIInput)
-    - Canvas UIRawImage -> BeScript UIRawImage (TS BeUIRawImage)
-    - Canvas ScrollRect -> BeScript UIRect (TS BeUIRect)
 
 ### Excel表格规范
 
@@ -296,7 +348,7 @@
 - `*.map_`和`*.mech`的直接子目录是零件目录,零件目录使用纯数字零件id命名
 - 禁止一切对`setting.json`/`*.map`/`*.mech`/`map.json`/`mech.json`/`vars.json`/`list.json`/`device.json`/`*.code`/`*.canvas`的直接修改尝试,混乱的尝试通常会直接破坏数据导致游戏中不可用,只有通过MCP间接修改才可以保证安全(目前MCP支持修改TS和Html文件)
 - 视图覆盖范围:
-    - 零件整体(含全局变量/内联和链接脚本)聚合生成TS视图
+    - 零件整体(含全局变量/内联和链接脚本)聚合生成TS视图.
     - 独立canvas文件生成html视图(内联形式的canvas的视图在TS视图内部)
     - 针对coderepo有专门的`temp/toolkit/bescript_reference/CodeRepo.ts`只读索引视图(自动维护,无法主动修改也无需修改)
     - 针对自定义逻辑引用有专门的`temp/toolkit/bescript_reference/custom-logic.d.ts`索引视图(自动维护,无法主动修改也无需修改)
@@ -308,26 +360,33 @@
 
 ## MCP使用注意事项
 
-- 视图换算规则 temp/toolkit/views 相当于工程根的位置,比如:
+### Host 与视图/预览同步
+
+- **Host**（CreatAI/Machinist 工具链侧进程）在工程由工具打开、监听生效时，持续维护 `temp/toolkit/views` 下 TS/HTML视图与工程内原始 `*.code` / `*.canvas` 的一致性，并按规则维护对应的`预览 PNG`。
+- **mechtoolkit 等 MCP** 由该 Host 暴露；只要MCP正常运行,文件就不会不同步此时不应该胡乱假设"不同步"而是重新读取最新状态。除非长时间持续下去的异常状态应该通知用户
+- 若 MCP 持续异常（超时、断连、工具无响应等），且已排除本机网络不通，则可能Host 已不可用,需重启.提示用户尝试重启 Host 以修复工具链。
+- 若频繁遇到MCP的拒绝,应该回顾前面提交的修改是否符合规则
+
+### 视图换算规则
+
+- temp/toolkit/views 相当于工程根的位置,比如:
     - `temp/toolkit/views/map.map_/54.ts` 对应 `viewRelativePath = map.map_/54.ts`
     - `temp/toolkit/views/layouts/A2.html` 对应 `viewRelativePath = layouts/A2.html`
 - 全程使用相对工程根的路径,且禁止`..`这种可能导致越界的表示形式,明确两种路径:
     - ViewPath：相对 `temp/toolkit/views/`，只用 `/`。用于 `mechtoolkit.patch_mech_view.viewRelativePath`
     - WorkspacePath：相对工程根目录，只用 `/`，禁止 `..`，禁止绝对路径。用于 `mechtoolkit.refactor_*` 的各种 `*Path`
-- 注意修改顺序:必须先有脚本才能添加对脚本的调用,不得先调用再声明
+- mechtoolkit 不支持任何的worktree 其只维护实际工程根范围内的文件,只会生成在工程本身而不会生成到任何的worktree
+
+### 修改操作的限制
+
+- 注意修改顺序: 必须先有脚本才能添加对脚本的调用,不得先调用再声明
 - 为确保修改真实有效,写回后必须复读确认
-- mechtoolkit 不支持任何的worktree 其只维护实际工程根范围内的文件
 - `patch_mech_view`为确保准确性,在脚本仍被引用时是禁止更名和删除的,如需更名可以用refactor相关重命名.删除脚本的正确做法:先删除所有调用处(Act调用等),再将整个方法定义(装饰器+签名+花括号+方法体)一次性删掉.禁止只清空方法体而保留空壳
-- 修改过canvas之后,务必读图!一定要找到和重新读预览图!禁止出现那种分不清上下左右的混乱场景!读图确认真实结果,要整齐美观无错乱!
-- "注释"不一定之指code文件当中的注释或者TS视图的代码行注释,也可以是全局变量或者方法的"comment"这些位置要充分利用,可辅助存储重要说明信息!
-- 输出调试信息时可以利用底层的隐式转换支持,直接用格式串(用%1等等表示位置)+内容隐式转文本.或者直接文本拼接(可变方法,同样支持隐式转换)
-- 在生成TS视图时有压缩机制,底层方法已经被转义和优化了表达形式.因此TS视图上方法和对应的原始code不是完全一样是完全正常的!不要在这种事情上面纠结!正常编辑TS视图即可,工具会辅助你把TS视图转回合适的原始code内容
-- 若频繁遇到MCP的拒绝,应该回顾前面提交的修改是否符合规则
 
 ## 弹幕互动游戏设计要点
 
 - 测试功能:
-    - 测试是正式游戏的一个隐藏部分
+    - 受制于CreatAI平台并未提供专门测试框架,所以测试需要设计成正式游戏的一个隐藏部分
     - 惯例是表格配置ID+启动时按住G的逻辑判定.实现当中应与惯例保持一致
     - 测试环境当中的用户本身持有一个虚拟的"弹幕玩家",然后以这个弹幕玩家的身份发送各种模拟消息
     - 为了测试方便,这个特殊弹幕玩家可能需要额外的"切换队伍"支持,即使真正的游戏当中不会这样
@@ -348,3 +407,20 @@
         - 交互或收到礼物时应进行播报
         - 建议设计连击跳动等动态效果增强反馈手感
         - 需要强烈的反馈满足观众虚荣心
+
+Avoid over-engineering. Only make changes that are directly requested or clearly necessary. Keep solutions
+simple and focused.
+
+- Don't add features, refactor code, or make "improvements" beyond what was asked. A bug fix doesn't need surrounding code cleaned up. A simple feature doesn't need extra configurability. Don't add docstrings,
+comments, or type annotations to code you didn't change. Only add comments where the logic isn't self-
+evident.
+
+- Don't add error handling, fallbacks, or validation for scenarios that can't happen. Trust internal code and
+framework guarantees. Only validate at system boundaries (user input, external APIs). Don't use feature flags or backwards-compatibility shims when you can just change the code.
+
+- Don't create helpers, utilities, or abstractions for one-time operations. Don't design for hypothetical
+future requirements. The right amount of complexity is the minimum needed for the current task—three similar
+lines of code is better than a premature abstraction.
+
+- Avoid backwards-compatibility hacks like renaming unused _vars, re-exporting types, adding // removed
+comments for removed code, etc. If you are certain that something is unused, you can delete it completely.
