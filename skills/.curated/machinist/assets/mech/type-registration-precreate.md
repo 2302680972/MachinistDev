@@ -31,7 +31,6 @@ public X_Model_x27_RegisterType = BeScript({ name: "Model'RegisterType", color: 
     core.callFun(BeString.fromBeConst("Public'AutoReclaim"), modelKey);
     created.addEqual(BeLong.fromBeConst("1"));
   }
-  // --- 隐式返回勿修改
   return;
 });
 
@@ -47,7 +46,6 @@ protected X_Wall_x27_New = BeScript({ name: "Wall'New", color: [8, 0, 255], priv
   $obj = G.createAIMech(BeString.fromBeConst("边界"), BeFloat.fromBeConst("0"), $pos, $direction, BeEnum.fromBeConst<CreateMechPositionAlignment>(CreateMechPositionAlignment.Core), BeBool.fromBeConst("0"));
   Act.self<Device_Scenario_329>(this).X_Generic_x27_MechPhysics($obj, BeBool.fromBeConst("1"), BeFloat.fromBeConst("1"));
   this.WallUsing.add($obj);
-  // --- 隐式返回勿修改
   return $obj;
 });
 
@@ -76,7 +74,6 @@ public X_Wall_x27_SetWall = BeScript({ name: "Wall'SetWall", color: [8, 0, 255],
   if (G.bool.not($exist)) {
     $obj = Act.self<Device_Scenario_329>(this).X_Wall_x27_New($pos, $direction);
   }
-  // --- 隐式返回勿修改
   return $obj;
 });
 ```

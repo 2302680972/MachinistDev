@@ -85,7 +85,6 @@ public X_Bullet_x27_SetBullet = BeScript({ name: "Bullet'SetBullet", color: [0, 
       $team2Current.addEqual(BeLong.fromBeConst("1"));
     }
   }
-  // --- 隐式返回勿修改
   return $success;
 });
 ```
@@ -117,7 +116,6 @@ public X_GiftModel_x27_SetGiftModel = BeScript({ name: "GiftModel'SetGiftModel",
     $obj = Act.self<Device_Scenario_329>(this).X_GiftModel_x27_New($modelKey);
   }
   $obj.callFun(BeString.fromBeConst("Generic'PlayAnimation"), $modelKey, $text, $player, $skipUI, $mode);
-  // --- 隐式返回勿修改
   return;
 });
 ```

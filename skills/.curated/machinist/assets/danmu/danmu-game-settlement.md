@@ -12,7 +12,6 @@ public X_Button_Settlement_x27_RestartGame = BeScript({ name: "Button_Settlement
   // @locals-end
 
   G.map.restartGame()
-  // --- 隐式返回勿修改
   return
 });
 
@@ -39,7 +38,6 @@ public X_Game_x27_Settlement = BeScript({ name: "Game'Settlement", color: [255, 
     Act.self<Device_弹幕_54>(this).X_UI_x27_EnterSettlement(winner)
     settled = G.create.bool(BeBool.fromBeConst("1"))
   }
-  // --- 隐式返回勿修改
   return
 });
 ```

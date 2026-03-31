@@ -25,7 +25,6 @@ public 读取文字规则 = BeScript({ name: "读取文字规则", retVar: "r" }
     G.debug.print(s, BeColor.fromBeConst("255,0,0,255"), BeBool.fromBeConst("0"));
   }
   r = G.readExcel2<BeString>(ID, BeString.fromBeConst("文字"), BeString.fromBeConst("规则"));
-  // --- 隐式返回勿修改
   return r;
 });
 ```
@@ -66,7 +65,6 @@ private clientStart = EventGroup<[$mapIndex: BeFloat, $rule: BeString], void>({
       }
       列表编号_纵 = G.float.add(列表编号_纵, BeFloat.fromBeConst("1"));
     }
-    // --- 隐式返回勿修改
     return;
   }),
 });
@@ -109,7 +107,6 @@ private clientStart = EventGroup<[$mapIndex: BeFloat, $rule: BeString], void>({
     if (G.create.bool(key)) {
       this.是GM = G.create.bool(BeBool.fromBeConst("1"));
     }
-    // --- 隐式返回勿修改
     return;
   }),
 });

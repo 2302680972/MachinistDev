@@ -14,7 +14,6 @@ public X_弹幕处理_x27_点赞 = BeScript({ name: "弹幕处理'点赞", color
     Act.self<Device_弹幕_54>(this).X_玩家_x27_自动下场检查(玩家);
   }
   Act.self<Device_弹幕_54>(this).X_得到礼物_x27_点赞(点赞数量, 玩家);
-  // --- 隐式返回勿修改
   return;
 });
 ```

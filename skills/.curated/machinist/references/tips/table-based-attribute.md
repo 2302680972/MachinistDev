@@ -78,7 +78,6 @@ public 读取文字规则 = BeScript({ name: "读取文字规则", retVar: "r" }
     G.debug.print(s, BeColor.fromBeConst("255,0,0,255"), BeBool.fromBeConst("0"));
   }
   r = G.readExcel2<BeString>(ID, BeString.fromBeConst("文字"), BeString.fromBeConst("规则"));
-  // --- 隐式返回勿修改
   return r;
 });
 ```
@@ -100,7 +99,6 @@ public 读取整数规则 = BeScript({ name: "读取整数规则", retVar: "ret"
     G.debug.print(s, BeColor.fromBeConst("255,50,50,205"), BeBool.fromBeConst("0"));
   }
   ret = G.readExcel2<BeLong>(ID, BeString.fromBeConst("整数值"), BeString.fromBeConst("规则"));
-  // --- 隐式返回勿修改
   return ret;
 });
 ```
@@ -137,7 +135,6 @@ private clientStart = EventGroup<[$mapIndex: BeFloat, $rule: BeString], void>({
       }
       列表编号_纵 = G.float.add(列表编号_纵, BeFloat.fromBeConst("1"));
     }
-    // --- 隐式返回勿修改
     return;
   }),
 });
@@ -179,7 +176,6 @@ private clientStart = EventGroup<[$mapIndex: BeFloat, $rule: BeString], void>({
     if (G.create.bool(this.是GM)) {
       Act.byName<Device_参数调节模块_255>("参数调节模块").初始化快捷调试面板();
     }
-    // --- 隐式返回勿修改
     return;
   }),
 });

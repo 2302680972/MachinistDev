@@ -84,7 +84,6 @@ public X_Generic_x27_PlayVideo = BeScript({ name: "Generic'PlayVideo", retVar: "
   }
   await G.delay(G.create.float(BeFloat.fromBeConst("0")));
   UI.del(BeFloat.fromBeConst("0"));
-  // --- 隐式返回勿修改
   return ret;
 });
 ```
@@ -117,7 +116,6 @@ public X_UI_Tip_x27_Animation = BeScript({ name: "UI_Tip'Animation" })(() => {
     this.X_Tip_x27_AniActivate = G.create.bool(BeBool.fromBeConst("0"));
     G.script.skip();
   }
-  // --- 隐式返回勿修改
   return;
 });
 ```

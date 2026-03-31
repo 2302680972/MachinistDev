@@ -16,7 +16,6 @@ public X_Generic_x27_MechPhysics = BeScript({ name: "Generic'MechPhysics", color
   $obj.setPhysicsMaterial(弹性, BeFloat.fromBeConst("0"), BeFloat.fromBeConst("0"));
   $obj.setDrag(BeFloat.fromBeConst("0"));
   $obj.setAngularDrag(BeFloat.fromBeConst("1"));
-  // --- 隐式返回勿修改
   return;
 });
 
@@ -28,7 +27,6 @@ public X_Generic_x27_BulletInitialize = BeScript({ name: "Generic'BulletInitiali
   // @locals-begin
   // @locals-end
   $obj.callFun(BeString.fromBeConst("Public'Initialize"), $pos, $direction, $type, $faction, $height, $player, this.ScenarioOffset);
-  // --- 隐式返回勿修改
   return;
 });
 
@@ -49,7 +47,6 @@ protected X_Bullet_x27_New = BeScript({ name: "Bullet'New", color: [0, 138, 255]
   $obj = G.createAIMech(BeString.fromBeConst("子弹"), BeFloat.fromBeConst("0"), $pos, $dir, BeEnum.fromBeConst<CreateMechPositionAlignment>(CreateMechPositionAlignment.Bottom), BeBool.fromBeConst("0"));
   Act.self<Device_Scenario_329>(this).X_Generic_x27_MechPhysics($obj, BeBool.fromBeConst("0"), BeFloat.fromBeConst("1"));
   $bulletList.add($obj);
-  // --- 隐式返回勿修改
   return $obj;
 });
 ```

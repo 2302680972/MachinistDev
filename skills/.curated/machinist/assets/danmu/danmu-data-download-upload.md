@@ -30,7 +30,6 @@ public X_存档_x27_上传 = BeScript({ name: "存档'上传" })((强制: BeBool
       G.map.save()
     }
   }
-  // --- 隐式返回勿修改
   return
 });
 
@@ -49,7 +48,6 @@ public X_功能设置持久化_x27_下载攻略提示并应用 = BeScript({ name
     this.X_功能开关_x27_攻略提示 = data.read<"BeBool">(BeString.fromBeConst("攻略提示存档标志位"), BeBool.fromBeConst("0"))
   }
   Act.self<Device_弹幕_54>(this).X_UI_功能面板_x27_应用并刷新攻略提示显示()
-  // --- 隐式返回勿修改
   return
 });
 
@@ -65,7 +63,6 @@ public X_功能设置持久化_x27_上传攻略提示 = BeScript({ name: "功能
   data = G.map.load()
   data.insert(BeString.fromBeConst("攻略提示存档标志位"), this.X_功能开关_x27_攻略提示)
   Act.self<Device_弹幕_54>(this).X_存档_x27_上传(BeBool.fromBeConst("1"))
-  // --- 隐式返回勿修改
   return
 });
 ```

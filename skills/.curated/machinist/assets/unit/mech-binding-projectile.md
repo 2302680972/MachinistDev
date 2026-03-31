@@ -13,7 +13,6 @@ public X_Launcher_x27_指定坐标放置 = BeScript({ name: "Launcher'指定坐�
   // --- return-separator ---
   // @locals-end
   ret = Act.self<Device_基地_331_VirtualCore>(this).X_Launcher_x27_AbstractSetBullet(position, direction, type, this.X_Attr_x27_Faction, player, HPMul, crit, initHp, useManualSpeed, manualSpeed);
-  // --- 隐式返回勿修改
   return ret;
 });
 
@@ -31,7 +30,6 @@ public X_Launcher_x27_AbstractSetBullet = BeScript({ name: "Launcher'AbstractSet
     manualSpeed = G.create.float(BeFloat.fromBeConst("-1"));
   }
   ret = this.map_handler.callReturn<BeBool>(BeString.fromBeConst("Bullet'SetBullet"), position, direction, type, faction, player, HPMul, crit, initHp, manualSpeed);
-  // --- 隐式返回勿修改
   return ret;
 });
 
@@ -52,7 +50,6 @@ public X_Public_x27_AddBullet = BeScript({ name: "Public'AddBullet", comment: "�
   }
   /* 当前时间 = G.time.scaleTime(); */
   /* this.自动暖场时间 = G.float.add(当前时间, BeFloat.fromBeConst("5")); */
-  // --- 隐式返回勿修改
   return;
 });
 ```

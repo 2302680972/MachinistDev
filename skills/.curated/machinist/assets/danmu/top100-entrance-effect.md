@@ -36,7 +36,6 @@ public X_UI_局内_x27_事件_玩家加入 = BeScript({ name: "UI_局内'事件_
   M = G.createAIMech(BeString.fromBeConst("玩家入场"), BeFloat.fromBeConst("99"), BeVector3.fromBeConst("0,-100,0"), BeVector3.fromBeConst("0,0,1"), BeEnum.fromBeConst<CreateMechPositionAlignment>(CreateMechPositionAlignment.Core), BeBool.fromBeConst("0"));
   core = M.getCoreDevice();
   core.callFun(BeString.fromBeConst("设置排名"), 世界榜周榜, 玩家, 队伍);
-  // --- 隐式返回勿修改
   return ok;
 });
 ```
@@ -84,7 +83,6 @@ public 入场动图 = BeScript({ name: "入场动图", retVar: "ok" })((rank: Be
   }
   // ... 其他排名段
   动图.del(BeFloat.fromBeConst("0"));
-  // --- 隐式返回勿修改
   return ok;
 });
 ```
@@ -131,7 +129,6 @@ public X_Generic_x27_PlayVideo = BeScript({ name: "Generic'PlayVideo", retVar: "
   }
   await G.delay(G.create.float(BeFloat.fromBeConst("0")));
   UI.del(BeFloat.fromBeConst("0"));
-  // --- 隐式返回勿修改
   return ret;
 });
 ```

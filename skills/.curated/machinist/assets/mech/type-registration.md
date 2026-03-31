@@ -23,7 +23,6 @@ public X_Bullet_x27_RegisterBulletType = BeScript({ name: "Bullet'RegisterBullet
   $bulletInfo.set(BeString.fromBeConst("globalLimit"), $globalLimit);
   $bulletInfo.set(BeString.fromBeConst("globalCurrent"), $zero);
   this.BulletRegInfo.set($bulletType, $bulletInfo);
-  // --- 隐式返回勿修改
   return;
 });
 ```
@@ -48,7 +47,6 @@ public X_Bullet_x27_RegisterModelType = BeScript({ name: "Bullet'RegisterModelTy
     this.Bullet.set($key, $bullet);
     this.BulletUnused.set($key, $bulletUnused);
   }
-  // --- 隐式返回勿修改
   return;
 });
 ```
@@ -73,7 +71,6 @@ public X_GiftModel_x27_RegisterType = BeScript({ name: "GiftModel'RegisterType",
     this.Bullet.set($modelKey, $bullet);
     this.BulletUnused.set($modelKey, $bulletUnused);
   }
-  // --- 隐式返回勿修改
   return;
 });
 ```

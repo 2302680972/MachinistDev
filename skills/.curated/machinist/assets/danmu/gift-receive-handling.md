@@ -27,7 +27,6 @@ public X_BarrageHandler_x27_Gift = BeScript({ name: "BarrageHandler'Gift" })((ms
     }
     // ... 其他礼物类型
   }
-  // --- 隐式返回勿修改
   return
 });
 
@@ -64,7 +63,6 @@ public X_得到礼物_x27_点赞 = BeScript({ name: "得到礼物'点赞", color
     技能数 = G.long.multiply(count, BeLong.fromBeConst("1"))
     Act.byName<Device_Scenario_329>("Scenario").X_技能_x27_添加到守方玩家炮塔(BeString.fromBeConst("20001"), 技能数, player)
   }
-  // --- 隐式返回勿修改
   return
 });
 
@@ -85,7 +83,6 @@ public X_平台适配器_x27_更新礼物图 = BeScript({ name: "平台适配器
       图片.loadPic(礼物图名)
     }
   }
-  // --- 隐式返回勿修改
   return
 });
 
@@ -111,7 +108,6 @@ public X_平台适配器_x27_得到礼物图名 = BeScript({ name: "平台适配
     }
     // ... 其他级别
   }
-  // --- 隐式返回勿修改
   return name
 });
 ```

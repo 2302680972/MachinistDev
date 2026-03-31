@@ -18,7 +18,6 @@ public X_Bullet_x27_OnReclaim = BeScript({ name: "Bullet'OnReclaim", color: [0, 
   $unused = this.BulletUnused.get<BeList>($key, BeBool.fromBeConst("0"));
   $unused.add($obj);
   $obj.setActive(BeBool.fromBeConst("0"));
-  // --- 隐式返回勿修改
   return;
 });
 ```
@@ -37,7 +36,6 @@ public X_GiftModel_x27_OnReclaim = BeScript({ name: "GiftModel'OnReclaim", color
   $unused = this.BulletUnused.get<BeList>($modelKey, BeBool.fromBeConst("0"));
   $unused.add($obj);
   $obj.setActive(BeBool.fromBeConst("0"));
-  // --- 隐式返回勿修改
   return;
 });
 ```
@@ -67,7 +65,6 @@ public X_Bullet_x27_ForceReclaimByModel = BeScript({ name: "Bullet'ForceReclaimB
     $faction = G.create.long(BeLong.fromBeConst("0"));
     $obj.callFun(BeString.fromBeConst("Public'Damage"), $value, $faction);
   }
-  // --- 隐式返回勿修改
   return;
 });
 ```
@@ -91,7 +88,6 @@ public X_Bullet_x27_ForceReclaimAll = BeScript({ name: "Bullet'ForceReclaimAll",
   Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("50"));
   Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("51"));
   Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("60"));
-  // --- 隐式返回勿修改
   return;
 });
 ```
