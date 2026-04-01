@@ -10,13 +10,10 @@
   * sourcePath: map.map_/54/scripts/读取整数规则.code
   */
 public 读取整数规则 = BeScript({ name: "读取整数规则", retVar: "ret" })((n: BeString) => {
-  // @locals-begin
   var ID: BeLong
   var 文字: BeString
   var s: BeString
   var ret: BeLong
-  // --- return-separator ---
-  // @locals-end
   ID = G.findExcel2<BeString>(BeString.fromBeConst("name"), n, BeString.fromBeConst("规则"));
   if (G.long.lt(ID, BeLong.fromBeConst("0"))) {
     文字 = G.create.string(BeString.fromBeConst("表格中找不到"));
@@ -33,9 +30,7 @@ public 读取整数规则 = BeScript({ name: "读取整数规则", retVar: "ret"
   * sourcePath: map.map_/54/scripts/倒计时时间显示.code
   */
 public 倒计时时间显示 = BeScript({ name: "倒计时时间显示", retVar: "r" })((秒: BeLong) => {
-  // @locals-begin
   var r: BeString
-  // --- return-separator ---
   var day: BeFloat
   var 天: BeLong
   var 文字: BeString
@@ -43,7 +38,6 @@ public 倒计时时间显示 = BeScript({ name: "倒计时时间显示", retVar:
   var 小时: BeLong
   var min: BeFloat
   var 分钟: BeLong
-  // @locals-end
   r = G.create.string(BeString.fromBeConst(""));
   if (G.long.gt(秒, BeLong.fromBeConst("86400"))) {
     day = G.long.division(秒, BeLong.fromBeConst("86400"));
@@ -86,13 +80,10 @@ public 倒计时时间显示 = BeScript({ name: "倒计时时间显示", retVar:
   * sourcePath: map.map_/54/scripts/读取文字规则.code
   */
 public 读取文字规则 = BeScript({ name: "读取文字规则", retVar: "r" })((n: BeString) => {
-  // @locals-begin
   var ID: BeLong
   var 文字: BeString
   var s: BeString
   var r: BeString
-  // --- return-separator ---
-  // @locals-end
   ID = G.findExcel2<BeString>(BeString.fromBeConst("name"), n, BeString.fromBeConst("规则"));
   if (G.long.lt(ID, BeLong.fromBeConst("0"))) {
     文字 = G.create.string(BeString.fromBeConst("表格中找不到"));
@@ -109,10 +100,8 @@ public 读取文字规则 = BeScript({ name: "读取文字规则", retVar: "r" }
   * sourcePath: map.map_/54/scripts/测试'发送礼物消息_通用.code
   */
 public X_测试_x27_发送礼物消息_通用 = BeScript({ name: "测试'发送礼物消息_通用", color: [255, 255, 255] })((玩家id: BeString, 礼物序号: BeLong, 礼物数量: BeLong, 头像url: BeString, 玩家昵称: BeString) => {
-  // @locals-begin
   var 礼物id: BeString
   var 礼物消息: BeString
-  // @locals-end
   礼物id = Act.self<Device_弹幕_54>(this).X_测试_x27_得到抖音礼物id(礼物序号);
   礼物消息 = G.string.Format(BeString.fromBeConst("[{\"msg_id\": \"1\",\"sec_openid\": \"%1\",\"sec_gift_id\": \"%2\",\"gift_num\": %3,\"gift_value\": 10000,\"avatar_url\": \"%4\",\"nickname\": \"%5\",\"timestamp\": 1}]"), 玩家id, 礼物id, 礼物数量, 头像url, 玩家昵称);
   G.simulate_comment(BeString.fromBeConst("live_gift"), 礼物消息);

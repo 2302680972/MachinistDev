@@ -10,9 +10,7 @@
   * sourcePath: map.map_/329/scripts/Bullet'SetBullet.code
   */
 public X_Bullet_x27_SetBullet = BeScript({ name: "Bullet'SetBullet", color: [0, 138, 255], comment: "设置一个普通子弹", retVar: "$success" })(($pos: BeVector3, $direction: BeVector3, $type: BeLong, $faction: BeLong, $player: BeStruct) => {
-  // @locals-begin
   var $success: BeBool
-  // --- return-separator ---
   var $bulletKey: BeString
   var $info: BeStruct
   var $modelKey: BeString
@@ -31,7 +29,6 @@ public X_Bullet_x27_SetBullet = BeScript({ name: "Bullet'SetBullet", color: [0, 
   var $index: BeFloat
   var $exist: BeBool
   var $obj: BeMech
-  // @locals-end
   if (G.bool.not(this.GameStarted)) {
     $success = G.create.bool(BeBool.fromBeConst("0"));
     return $success;
@@ -97,12 +94,10 @@ public X_Bullet_x27_SetBullet = BeScript({ name: "Bullet'SetBullet", color: [0, 
   * sourcePath: map.map_/329/scripts/GiftModel'SetGiftModel.code
   */
 public X_GiftModel_x27_SetGiftModel = BeScript({ name: "GiftModel'SetGiftModel", color: [0, 138, 255], comment: "设置一个普通子弹" })(($modelKey: BeString, $text: BeString, $player: BeStruct, $skipUI: BeBool, $mode: BeLong) => {
-  // @locals-begin
   var $unusedList: BeList
   var $index: BeFloat
   var $exist: BeBool
   var $obj: BeMech
-  // @locals-end
   $unusedList = this.BulletUnused.get<BeList>($modelKey, BeBool.fromBeConst("0"));
   $index = $unusedList.count();
   $exist = G.float.gt($index, BeFloat.fromBeConst("0"));

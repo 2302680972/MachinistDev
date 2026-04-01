@@ -50,9 +50,7 @@
 
 ```ts
 public X_Generic_x27_PlayVideo = BeScript({ name: "Generic'PlayVideo", retVar: "ret" })((name1: BeString, UI: BeUIRawImage) => {
-  // @locals-begin
   var ret: BeBool
-  // --- return-separator ---
   var 当前颜色: BeColor
   var 视频信息: BeStruct
   var duration: BeFloat
@@ -61,7 +59,6 @@ public X_Generic_x27_PlayVideo = BeScript({ name: "Generic'PlayVideo", retVar: "
   var time: BeFloat
   var timeUsed: BeFloat
   var 按住按键: BeBool
-  // @locals-end
   ret = G.create.bool(BeBool.fromBeConst("0"));
   当前颜色 = G.create.color(BeColor.fromBeConst("255,255,255,0"));
   视频信息 = UI.setVideo(name1, undefined);
@@ -95,13 +92,11 @@ public X_Generic_x27_PlayVideo = BeScript({ name: "Generic'PlayVideo", retVar: "
 
 ```ts
 public X_UI_Tip_x27_Animation = BeScript({ name: "UI_Tip'Animation" })(() => {
-  // @locals-begin
   var 当前时间: BeFloat
   var 已用时间: BeFloat
   var 比例: BeFloat
   var 插值: BeFloat
   var 转动: BeVector3
-  // @locals-end
   当前时间 = G.time.time();
   已用时间 = G.float.minus(当前时间, this.X_Tip_x27_AniStart);
   比例 = G.float.division(已用时间, BeFloat.fromBeConst("0.5"));

@@ -10,10 +10,8 @@
   * sourcePath: map.map_/329/scripts/Bullet'OnReclaim.code
   */
 public X_Bullet_x27_OnReclaim = BeScript({ name: "Bullet'OnReclaim", color: [0, 138, 255], comment: "回收模型" })(($obj: BeMech, $modelType: BeLong) => {
-  // @locals-begin
   var $key: BeString
   var $unused: BeList
-  // @locals-end
   $key = G.create.string($modelType);
   $unused = this.BulletUnused.get<BeList>($key, BeBool.fromBeConst("0"));
   $unused.add($obj);
@@ -30,9 +28,7 @@ public X_Bullet_x27_OnReclaim = BeScript({ name: "Bullet'OnReclaim", color: [0, 
   * sourcePath: map.map_/329/scripts/GiftModel'OnReclaim.code
   */
 public X_GiftModel_x27_OnReclaim = BeScript({ name: "GiftModel'OnReclaim", color: [0, 138, 255], comment: "回收事件" })(($obj: BeMech, $modelKey: BeString) => {
-  // @locals-begin
   var $unused: BeList
-  // @locals-end
   $unused = this.BulletUnused.get<BeList>($modelKey, BeBool.fromBeConst("0"));
   $unused.add($obj);
   $obj.setActive(BeBool.fromBeConst("0"));
@@ -48,13 +44,11 @@ public X_GiftModel_x27_OnReclaim = BeScript({ name: "GiftModel'OnReclaim", color
   * sourcePath: map.map_/329/scripts/Bullet'ForceReclaimByModel.code
   */
 public X_Bullet_x27_ForceReclaimByModel = BeScript({ name: "Bullet'ForceReclaimByModel", comment: "按照使用的模型强制回收子弹" })(($key: BeString) => {
-  // @locals-begin
   var $bullet: BeList
   var $index: BeFloat
   var $obj: BeMech
   var $value: BeFloat
   var $faction: BeLong
-  // @locals-end
   $bullet = this.Bullet.get<BeList>($key, BeBool.fromBeConst("0"));
   $index = $bullet.count();
   while (G.float.gt($index, BeFloat.fromBeConst("0"))) {
@@ -77,8 +71,6 @@ public X_Bullet_x27_ForceReclaimByModel = BeScript({ name: "Bullet'ForceReclaimB
   * sourcePath: map.map_/329/scripts/Bullet'ForceReclaimAll.code
   */
 public X_Bullet_x27_ForceReclaimAll = BeScript({ name: "Bullet'ForceReclaimAll", color: [0, 138, 255], comment: "强制回收全部子弹" })(() => {
-  // @locals-begin
-  // @locals-end
   Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("0"));
   Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("1"));
   Act.self<Device_Scenario_329>(this).X_Bullet_x27_ForceReclaimByModel(BeString.fromBeConst("20"));

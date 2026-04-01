@@ -8,12 +8,9 @@
   * sourcePath: map.map_/54/scripts/BarrageHandler'Gift.code
   */
 public X_BarrageHandler_x27_Gift = BeScript({ name: "BarrageHandler'Gift" })((msgObj: BeDict, player: BeStruct) => {
-  // @locals-begin
   var context: BeLong
   var giftCount: BeLong
   var giftType: BeString
-  // @locals-end
-
   context = Act.self<Device_弹幕_54>(this).GetContextId()
   player = Act.self<Device_弹幕_54>(this).X_Player_x27_InfoAutoFill(player)
   giftCount = msgObj.read<"BeLong">(BeString.fromBeConst("num"), BeBool.fromBeConst("0"))
@@ -35,13 +32,10 @@ public X_BarrageHandler_x27_Gift = BeScript({ name: "BarrageHandler'Gift" })((ms
   * sourcePath: map.map_/54/scripts/得到礼物'点赞.code
   */
 public X_得到礼物_x27_点赞 = BeScript({ name: "得到礼物'点赞", color: [112, 0, 255] })((count: BeLong, player: BeStruct) => {
-  // @locals-begin
   var score: BeLong
   var team: BeLong
   var 升级强度: BeLong
   var 技能数: BeLong
-  // @locals-end
-
   // 从结构中得到score后，直接修改score就会改变结构里的积分
   score = player.get<"BeLong">(BeString.fromBeConst("score"), BeBool.fromBeConst("0"))
   if (G.long.gt(count, BeLong.fromBeConst("0"))) {
@@ -71,11 +65,8 @@ public X_得到礼物_x27_点赞 = BeScript({ name: "得到礼物'点赞", color
   * sourcePath: map.map_/54/scripts/平台适配器'更新礼物图.code
   */
 public X_平台适配器_x27_更新礼物图 = BeScript({ name: "平台适配器'更新礼物图" })((布局: BeCanvas, 路径: BeString, 级别: BeLong) => {
-  // @locals-begin
   var 图片: BeUIRawImage
   var 礼物图名: BeString
-  // @locals-end
-
   if (布局.exist()) {
     图片 = 布局.read<"BeUIRawImage">(路径)
     if (图片.exist()) {
@@ -91,11 +82,7 @@ public X_平台适配器_x27_更新礼物图 = BeScript({ name: "平台适配器
   * sourcePath: map.map_/54/scripts/平台适配器'得到礼物图名.code
   */
 public X_平台适配器_x27_得到礼物图名 = BeScript({ name: "平台适配器'得到礼物图名", retVar: "name" })((level: BeLong) => {
-  // @locals-begin
   var name: BeString
-  // --- return-separator ---
-  // @locals-end
-
   if (G.create.bool(this.X_模式_x27_抖音)) {
     if (G.long.equal(level, BeLong.fromBeConst("0"))) {
       name = G.create.string(BeString.fromBeConst("仙女棒.png"))

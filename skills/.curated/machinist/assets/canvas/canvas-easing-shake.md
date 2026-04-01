@@ -10,14 +10,11 @@
   * sourcePath: map.map_/54/scripts/UI_Tip'Animation.code
   */
 public X_UI_Tip_x27_Animation = BeScript({ name: "UI_Tip'Animation" })(() => {
-  // @locals-begin
   var 当前时间: BeFloat
   var 已用时间: BeFloat
   var 比例: BeFloat
   var 插值: BeFloat
   var 转动: BeVector3
-  // @locals-end
-
   当前时间 = G.time.time()
   已用时间 = G.float.minus(当前时间, this.X_Tip_x27_AniStart)
   比例 = G.float.division(已用时间, BeFloat.fromBeConst("0.5"))

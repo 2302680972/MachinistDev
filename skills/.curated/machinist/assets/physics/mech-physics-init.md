@@ -8,8 +8,6 @@
   * sourcePath: map.map_/329/scripts/Generic'MechPhysics.code
   */
 public X_Generic_x27_MechPhysics = BeScript({ name: "Generic'MechPhysics", color: [8, 0, 255] })(($obj: BeMech, $closePhysics: BeBool, 弹性: BeFloat) => {
-  // @locals-begin
-  // @locals-end
   if (G.create.bool($closePhysics)) {
     $obj.enablePhysics(BeBool.fromBeConst("0"));
   }
@@ -24,8 +22,6 @@ public X_Generic_x27_MechPhysics = BeScript({ name: "Generic'MechPhysics", color
   * sourcePath: map.map_/329/scripts/Generic'BulletInitialize.code
   */
 public X_Generic_x27_BulletInitialize = BeScript({ name: "Generic'BulletInitialize", color: [8, 0, 255], comment: "通用子弹初始化接口再封装" })(($obj: BeMech, $pos: BeVector3, $direction: BeVector3, $type: BeLong, $faction: BeLong, $height: BeFloat, $player: BeStruct) => {
-  // @locals-begin
-  // @locals-end
   $obj.callFun(BeString.fromBeConst("Public'Initialize"), $pos, $direction, $type, $faction, $height, $player, this.ScenarioOffset);
   return;
 });
@@ -35,12 +31,9 @@ public X_Generic_x27_BulletInitialize = BeScript({ name: "Generic'BulletInitiali
   * sourcePath: map.map_/329/scripts/Bullet'New.code
   */
 protected X_Bullet_x27_New = BeScript({ name: "Bullet'New", color: [0, 138, 255], private: true, comment: "创建一个普通子弹", retVar: "$obj" })(($modelKey: BeString, $pos: BeVector3, $dir: BeVector3) => {
-  // @locals-begin
   var $obj: BeMech
-  // --- return-separator ---
   var $modelName: BeString
   var $bulletList: BeList
-  // @locals-end
   $modelName = G.string.add(BeString.fromBeConst("子弹"), $modelKey, BeString.fromBeConst(".mech"));
   $bulletList = this.Bullet.get<BeList>($modelKey, BeBool.fromBeConst("0"));
   Act.byName<Device_子弹_334>("子弹").changeMech($modelName);

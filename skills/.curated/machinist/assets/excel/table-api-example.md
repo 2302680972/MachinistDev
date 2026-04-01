@@ -10,13 +10,10 @@
   * sourcePath: map.map_/54/scripts/读取文字规则.code
   */
 public 读取文字规则 = BeScript({ name: "读取文字规则", retVar: "r" })((n: BeString) => {
-  // @locals-begin
   var r: BeString
-  // --- return-separator ---
   var ID: BeLong
   var 文字: BeString
   var s: BeString
-  // @locals-end
   ID = G.findExcel2<BeString>(BeString.fromBeConst("name"), n, BeString.fromBeConst("规则"));
   if (G.long.lt(ID, BeLong.fromBeConst("0"))) {
     文字 = G.create.string(BeString.fromBeConst("表格中找不到"));
@@ -38,7 +35,6 @@ public 读取文字规则 = BeScript({ name: "读取文字规则", retVar: "r" }
   */
 private clientStart = EventGroup<[$mapIndex: BeFloat, $rule: BeString], void>({
   碰撞层关系设定: BeScript({ name: "碰撞层关系设定", color: [255, 255, 255] })(($mapIndex: BeFloat, $rule: BeString) => {
-    // @locals-begin
     var ID数据列表: BeList
     var 循环次数_纵: BeFloat
     var 列表编号_纵: BeFloat
@@ -48,7 +44,6 @@ private clientStart = EventGroup<[$mapIndex: BeFloat, $rule: BeString], void>({
     var 对象层序号ID: BeLong
     var 列名: BeString
     var 布尔_碰撞开关: BeBool
-    // @locals-end
     ID数据列表 = G.map.excelGetIDList2(BeString.fromBeConst("碰撞层级设置"));
     循环次数_纵 = ID数据列表.count();
     列表编号_纵 = G.create.float(BeFloat.fromBeConst("0"));
@@ -79,7 +74,6 @@ private clientStart = EventGroup<[$mapIndex: BeFloat, $rule: BeString], void>({
   */
 private clientStart = EventGroup<[$mapIndex: BeFloat, $rule: BeString], void>({
   GM判断: BeScript({ name: "GM判断", color: [255, 255, 255] })(($mapIndex: BeFloat, $rule: BeString) => {
-    // @locals-begin
     var playerObj: BePlayer
     var playerID: BeLong
     var GMlist: BeList
@@ -88,7 +82,6 @@ private clientStart = EventGroup<[$mapIndex: BeFloat, $rule: BeString], void>({
     var index: BeLong
     var userID: BeLong
     var key: BeBool
-    // @locals-end
     playerObj = G.getCurrentPlayer();
     playerID = playerObj.id();
     GMlist = G.map.excelGetIDList2(BeString.fromBeConst("GM名单"));

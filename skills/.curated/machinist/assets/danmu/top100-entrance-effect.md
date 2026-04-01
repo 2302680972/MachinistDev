@@ -10,9 +10,7 @@
   * sourcePath: map.map_/54/scripts/UI_局内'事件_玩家加入.code
   */
 public X_UI_局内_x27_事件_玩家加入 = BeScript({ name: "UI_局内'事件_玩家加入", color: [255, 255, 255], comment: "此处玩家结构已经确保是已下场", retVar: "ok" })((玩家: BeStruct, 队伍: BeStruct) => {
-  // @locals-begin
   var ok: BeBool
-  // --- return-separator ---
   var 世界榜周榜: BeLong
   var 动态模拟排行: BeFloat
   var 动态模拟排行开关: BeFloat
@@ -20,19 +18,18 @@ public X_UI_局内_x27_事件_玩家加入 = BeScript({ name: "UI_局内'事件_
   var 百名以外: BeBool
   var M: BeMech
   var core: BeDevice
-  // @locals-end
   ok = G.create.bool(BeBool.fromBeConst("1"));
   Act.self<Device_弹幕_54>(this).X_UI_局内风格接口封装_x27_玩家互动事件(玩家, 队伍, 队伍, BeLong.fromBeConst("1"), BeDict.fromBeConst(""), BeLong.fromBeConst("0"));
-  //|读取排行
+  //读取排行
   世界榜周榜 = Act.self<Device_弹幕_54>(this).X_玩家结构_x27_读取_globalRank(玩家);
-  //|仅百强需要播放入场动画
+  //仅百强需要播放入场动画
   未上榜 = G.long.lt(世界榜周榜, BeLong.fromBeConst("0"));
   百名以外 = G.long.gte(世界榜周榜, BeLong.fromBeConst("100"));
   if (G.bool.or(未上榜, 百名以外)) {
     Act.self<Device_弹幕_54>(this).X_播报_检查或新建_x27_非百强玩家加入(玩家);
     return ok;
   }
-  //|百强动画通过一个马甲完成,不占用主循环
+  //百强动画通过一个马甲完成,不占用主循环
   M = G.createAIMech(BeString.fromBeConst("玩家入场"), BeFloat.fromBeConst("99"), BeVector3.fromBeConst("0,-100,0"), BeVector3.fromBeConst("0,0,1"), BeEnum.fromBeConst<CreateMechPositionAlignment>(CreateMechPositionAlignment.Core), BeBool.fromBeConst("0"));
   core = M.getCoreDevice();
   core.callFun(BeString.fromBeConst("设置排名"), 世界榜周榜, 玩家, 队伍);
@@ -48,9 +45,7 @@ public X_UI_局内_x27_事件_玩家加入 = BeScript({ name: "UI_局内'事件_
   * sourcePath: map.map_/312/scripts/入场动图.code
   */
 public 入场动图 = BeScript({ name: "入场动图", retVar: "ok" })((rank: BeLong) => {
-  // @locals-begin
   var ok: BeBool
-  // --- return-separator ---
   var VER: BeString
   var 切换: BeBool
   var 动图布局: BeCanvas
@@ -59,7 +54,6 @@ public 入场动图 = BeScript({ name: "入场动图", retVar: "ok" })((rank: Be
   var 动图: BeUIRawImage
   var b1: BeBool
   var b2: BeBool
-  // @locals-end
   G.ui.X_2dmode(BeBool.fromBeConst("1"), undefined);
   动图布局 = G.create.canvas(BeCanvas.fromBase64Const(`
     <MechCanvas name="" width="1080" height="2160">
@@ -71,11 +65,11 @@ public 入场动图 = BeScript({ name: "入场动图", retVar: "ok" })((rank: Be
   父UI节点 = 局内通用组件.read<BeUIRect>(BeString.fromBeConst("根节点_2D/百强全屏特效图层"));
   动图 = 动图布局.read<BeUIRawImage>(BeString.fromBeConst("动图"));
   父UI节点.addSon(动图);
-  //|1
+  //1
   if (G.long.equal(rank, BeLong.fromBeConst("0"))) {
     Act.self<Device_玩家入场_312_VirtualCore>(this).X_Generic_x27_PlayVideo(BeString.fromBeConst("02-185-.mp4"), 动图);
   }
-  //|2~3
+  //2~3
   b1 = G.long.gt(rank, BeLong.fromBeConst("0"));
   b2 = G.long.lte(rank, BeLong.fromBeConst("2"));
   if (G.bool.and(b1, b2)) {
@@ -95,9 +89,7 @@ public 入场动图 = BeScript({ name: "入场动图", retVar: "ok" })((rank: Be
   * sourcePath: map.map_/312/scripts/Generic'PlayVideo.code
   */
 public X_Generic_x27_PlayVideo = BeScript({ name: "Generic'PlayVideo", retVar: "ret" })((name1: BeString, UI: BeUIRawImage) => {
-  // @locals-begin
   var ret: BeBool
-  // --- return-separator ---
   var 当前颜色: BeColor
   var 视频信息: BeStruct
   var duration: BeFloat
@@ -106,7 +98,6 @@ public X_Generic_x27_PlayVideo = BeScript({ name: "Generic'PlayVideo", retVar: "
   var time: BeFloat
   var timeUsed: BeFloat
   var 按住按键: BeBool
-  // @locals-end
   ret = G.create.bool(BeBool.fromBeConst("0"));
   当前颜色 = G.create.color(BeColor.fromBeConst("255,255,255,0"));
   视频信息 = UI.setVideo(name1, undefined);

@@ -10,10 +10,8 @@
   * sourcePath: 机械/基地.mech_/0/scripts/Public'SetLayer.code
   */
 protected X_Public_x27_SetLayer = BeScript({ name: "Public'SetLayer", private: true })(($layer: BeFloat) => {
-  // @locals-begin
-  // @locals-end
   G.float.add($layer, BeFloat.fromBeConst("0"));
-  //|点击这里写注释
+  //点击这里写注释
   return;
 });
 ```
@@ -26,13 +24,10 @@ protected X_Public_x27_SetLayer = BeScript({ name: "Public'SetLayer", private: t
   * sourcePath: map.map_/329/scripts/粒子'得到碰撞层列表.code
   */
 public X_粒子_x27_得到碰撞层列表 = BeScript({ name: "粒子'得到碰撞层列表", retVar: "$list" })(() => {
-  // @locals-begin
   var $list: BeList
-  // --- return-separator ---
   var $layer1: BeFloat
   var $layer2: BeFloat
   var $init: BeBool
-  // @locals-end
   if (G.bool.not($init)) {
     $layer1 = G.create.float(BeFloat.fromBeConst("0"));
     $layer2 = G.create.float(BeFloat.fromBeConst("7"));

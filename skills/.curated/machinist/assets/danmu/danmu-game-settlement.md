@@ -8,9 +8,6 @@
   * sourcePath: map.map_/54/scripts/Button_Settlement'RestartGame.code
   */
 public X_Button_Settlement_x27_RestartGame = BeScript({ name: "Button_Settlement'RestartGame" })(() => {
-  // @locals-begin
-  // @locals-end
-
   G.map.restartGame()
   return
 });
@@ -20,13 +17,10 @@ public X_Button_Settlement_x27_RestartGame = BeScript({ name: "Button_Settlement
   * sourcePath: map.map_/54/scripts/Game'Settlement.code
   */
 public X_Game_x27_Settlement = BeScript({ name: "Game'Settlement", color: [255, 243, 0], comment: "结算" })((winner: BeLong) => {
-  // @locals-begin
   var data: BeDict
   var panel: BeUIButton
   var v: BeVector3
   var settled: BeBool
-  // @locals-end
-
   if (G.bool.not(settled)) {
     Act.byName<Device_Scenario_329>("Scenario").玩法结束()
     this.GameStart = G.create.bool(BeBool.fromBeConst("0"))

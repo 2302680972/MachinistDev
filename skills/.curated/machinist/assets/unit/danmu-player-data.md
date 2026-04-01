@@ -8,8 +8,6 @@
   * sourcePath: map.map_/54/scripts/弹幕处理'点赞.code
   */
 public X_弹幕处理_x27_点赞 = BeScript({ name: "弹幕处理'点赞", color: [255, 255, 255] })((点赞数量: BeLong, 玩家: BeStruct) => {
-  // @locals-begin
-  // @locals-end
   if (G.create.bool(this.X_局内功能设置_x27_自动下场)) {
     Act.self<Device_弹幕_54>(this).X_玩家_x27_自动下场检查(玩家);
   }

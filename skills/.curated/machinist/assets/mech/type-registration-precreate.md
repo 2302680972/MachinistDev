@@ -9,14 +9,12 @@
   * sourcePath: map.map_/329/scripts/Model'RegisterType.code
   */
 public X_Model_x27_RegisterType = BeScript({ name: "Model'RegisterType", color: [104, 0, 255], comment: "注册类型" })((modelKey: BeString, amount: BeLong) => {
-  // @locals-begin
   var bullet: BeList
   var bulletUnused: BeList
   var exist: BeBool
   var created: BeLong
   var model: BeMech
   var core: BeDevice
-  // @locals-end
   bullet = G.create.listN();
   bulletUnused = G.create.listN();
   exist = this.X_Model_x27_All.contains(modelKey);
@@ -39,10 +37,7 @@ public X_Model_x27_RegisterType = BeScript({ name: "Model'RegisterType", color: 
   * sourcePath: map.map_/329/scripts/Wall'New.code
   */
 protected X_Wall_x27_New = BeScript({ name: "Wall'New", color: [8, 0, 255], private: true, retVar: "$obj" })(($pos: BeVector3, $direction: BeVector3) => {
-  // @locals-begin
   var $obj: BeMech
-  // --- return-separator ---
-  // @locals-end
   $obj = G.createAIMech(BeString.fromBeConst("边界"), BeFloat.fromBeConst("0"), $pos, $direction, BeEnum.fromBeConst<CreateMechPositionAlignment>(CreateMechPositionAlignment.Core), BeBool.fromBeConst("0"));
   Act.self<Device_Scenario_329>(this).X_Generic_x27_MechPhysics($obj, BeBool.fromBeConst("1"), BeFloat.fromBeConst("1"));
   this.WallUsing.add($obj);
@@ -54,12 +49,9 @@ protected X_Wall_x27_New = BeScript({ name: "Wall'New", color: [8, 0, 255], priv
   * sourcePath: map.map_/329/scripts/Wall'SetWall.code
   */
 public X_Wall_x27_SetWall = BeScript({ name: "Wall'SetWall", color: [8, 0, 255], retVar: "$obj" })(($pos: BeVector3, $direction: BeVector3) => {
-  // @locals-begin
   var $obj: BeMech
-  // --- return-separator ---
   var $index: BeFloat
   var $exist: BeBool
-  // @locals-end
   $index = this.WallUnused.count();
   $exist = G.float.gt($index, BeFloat.fromBeConst("0"));
   if (G.create.bool($exist)) {

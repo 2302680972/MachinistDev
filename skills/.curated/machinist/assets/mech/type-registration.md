@@ -10,10 +10,8 @@
   * sourcePath: map.map_/329/scripts/Bullet'RegisterBulletType.code
   */
 public X_Bullet_x27_RegisterBulletType = BeScript({ name: "Bullet'RegisterBulletType", comment: "注册子弹实体" })(($bulletType: BeString, $modelKey: BeString, $teamLimit: BeLong, $globalLimit: BeLong) => {
-  // @locals-begin
   var $zero: BeLong
   var $bulletInfo: BeStruct
-  // @locals-end
   $zero = G.create.long(BeLong.fromBeConst("0"));
   $bulletInfo = G.create.struct();
   $bulletInfo.set(BeString.fromBeConst("modelKey"), $modelKey);
@@ -35,11 +33,9 @@ public X_Bullet_x27_RegisterBulletType = BeScript({ name: "Bullet'RegisterBullet
   * sourcePath: map.map_/329/scripts/Bullet'RegisterModelType.code
   */
 public X_Bullet_x27_RegisterModelType = BeScript({ name: "Bullet'RegisterModelType", comment: "注册模型" })(($key: BeString) => {
-  // @locals-begin
   var $bullet: BeList
   var $bulletUnused: BeList
   var $exist: BeBool
-  // @locals-end
   $bullet = G.create.listN();
   $bulletUnused = G.create.listN();
   $exist = this.Bullet.contains($key);
@@ -59,11 +55,9 @@ public X_Bullet_x27_RegisterModelType = BeScript({ name: "Bullet'RegisterModelTy
   * sourcePath: map.map_/329/scripts/GiftModel'RegisterType.code
   */
 public X_GiftModel_x27_RegisterType = BeScript({ name: "GiftModel'RegisterType", comment: "注册类型" })(($modelKey: BeString) => {
-  // @locals-begin
   var $bullet: BeList
   var $bulletUnused: BeList
   var $exist: BeBool
-  // @locals-end
   $bullet = G.create.listN();
   $bulletUnused = G.create.listN();
   $exist = this.Bullet.contains($modelKey);

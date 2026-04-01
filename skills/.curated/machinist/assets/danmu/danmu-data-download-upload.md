@@ -8,13 +8,10 @@
   * sourcePath: map.map_/54/scripts/存档'上传.code
   */
 public X_存档_x27_上传 = BeScript({ name: "存档'上传" })((强制: BeBool) => {
-  // @locals-begin
   var 当前时间: BeFloat
   var 时间间隔: BeFloat
   var 可上传: BeBool
   var 满足强制间隔: BeBool
-  // @locals-end
-
   当前时间 = G.time.time()
   时间间隔 = G.float.minus(当前时间, this.X_存档_x27_上次上传)
   可上传 = G.float.gte(时间间隔, BeFloat.fromBeConst("100"))
@@ -38,10 +35,7 @@ public X_存档_x27_上传 = BeScript({ name: "存档'上传" })((强制: BeBool
   * sourcePath: map.map_/54/scripts/功能设置持久化'下载攻略提示并应用.code
   */
 public X_功能设置持久化_x27_下载攻略提示并应用 = BeScript({ name: "功能设置持久化'下载攻略提示并应用" })(() => {
-  // @locals-begin
   var data: BeDict
-  // @locals-end
-
   this.X_功能开关_x27_攻略提示 = G.create.bool(BeBool.fromBeConst("1"))
   data = G.map.load()
   if (data.contains(BeString.fromBeConst("攻略提示存档标志位"))) {
@@ -56,10 +50,7 @@ public X_功能设置持久化_x27_下载攻略提示并应用 = BeScript({ name
   * sourcePath: map.map_/54/scripts/功能设置持久化'上传攻略提示.code
   */
 public X_功能设置持久化_x27_上传攻略提示 = BeScript({ name: "功能设置持久化'上传攻略提示" })(() => {
-  // @locals-begin
   var data: BeDict
-  // @locals-end
-
   data = G.map.load()
   data.insert(BeString.fromBeConst("攻略提示存档标志位"), this.X_功能开关_x27_攻略提示)
   Act.self<Device_弹幕_54>(this).X_存档_x27_上传(BeBool.fromBeConst("1"))
