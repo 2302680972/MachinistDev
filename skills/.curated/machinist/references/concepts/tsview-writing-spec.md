@@ -246,6 +246,7 @@ Generic'PlayAnimation   -> X_Generic_x27_PlayAnimation
 
 - 写回只依赖 `BeScript({ name })` 还原脚本，不依赖属性名本身
 - 但 `patch_mech_view` 会用"脚本原名 + 转义规则"推导出期望的属性名，若不一致会直接拒绝写回
+- 上述各类拒绝场景中，若文本匹配成功但校验失败，MCP 会自动保存 `.patch` 文件到视图同目录。若要继续修改，用 `patch_commit_file` 重新提交；若放弃此次修改，直接忽略该草稿即可，不要主动清理
 
 ## 6. 注释与禁用行
 
