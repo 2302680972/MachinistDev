@@ -13,7 +13,7 @@ if (G.float.Approximately(阵营, BeFloat.fromBeConst("2"))) {
   列表0 = 战斗数据集.get<"BeList">(BeString.fromBeConst("蓝方作战机械"), BeBool.fromBeConst("1"))
 }
 
-敌人 = G.creatVariable.mech(BeMech.fromBeConst(""))
+敌人 = G.creatVariable.mech(BeMech.fromBeConst())
 while (G.float.lt(小数i, 小数0)) {
   机械0 = 列表0.read<"BeMech">(小数i)
   小数i.addEqual(BeFloat.fromBeConst("1"))

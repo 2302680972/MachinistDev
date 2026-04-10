@@ -19,7 +19,7 @@ public X_UI_局内_x27_事件_玩家加入 = BeScript({ name: "UI_局内'事件_
   var M: BeMech
   var core: BeDevice
   ok = G.create.bool(BeBool.fromBeConst("1"));
-  Act.self<Device_弹幕_54>(this).X_UI_局内风格接口封装_x27_玩家互动事件(玩家, 队伍, 队伍, BeLong.fromBeConst("1"), BeDict.fromBeConst(""), BeLong.fromBeConst("0"));
+  Act.self<Device_弹幕_54>(this).X_UI_局内风格接口封装_x27_玩家互动事件(玩家, 队伍, 队伍, BeLong.fromBeConst("1"), BeDict.fromBeConst(), BeLong.fromBeConst("0"));
   //读取排行
   世界榜周榜 = Act.self<Device_弹幕_54>(this).X_玩家结构_x27_读取_globalRank(玩家);
   //仅百强需要播放入场动画

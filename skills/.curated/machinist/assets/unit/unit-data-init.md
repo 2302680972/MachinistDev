@@ -8,7 +8,7 @@ this.数据集.set(BeString.fromBeConst("角色朝向"), 向量0)
 向量0 = G.creatVariable.Vector3(BeFloat.fromBeConst("0"), BeFloat.fromBeConst("0"), BeFloat.fromBeConst("0"))
 this.数据集.set(BeString.fromBeConst("移动向量"), 向量0)
 
-机械0 = G.creatVariable.mech(BeMech.fromBeConst(""))
+机械0 = G.creatVariable.mech(BeMech.fromBeConst())
 this.数据集.set(BeString.fromBeConst("目标机械"), 机械0)
 
 角色机械 = Act.self<Device_木棒暴徒_1009>(this).getMech()

@@ -161,8 +161,10 @@
     - 常量
         - 在TS视图当中转为fromBeConst(底层Enum被特殊细分,值不是其他类型那样的String)
         - 无法独立存在,必须作为方法参数填入
-        - 除了Float/Long/Bool/String/Vector3/Color类型外,大部分常量位置只能填空白.
-        - Canvas是特殊场景,新建Canvas可以输入非空而其他canvas参数位常量只能填空.fromBeConst是TS视图当中常量的表达形式
+        - 有语义值类型（Bool/Float/Long/Color/Vector3/String）填具体值：`BeFloat.fromBeConst("1")`
+        - 空值占位类型（UI/Bytes/Canvas/Device/Mech/Player/ListN/Dict/Any/Icon/Struct）无参调用：`BeUI.fromBeConst()`
+        - 枚举常量必须带泛型和成员：`BeEnum<Foo>.fromBeConst(Foo.Bar)`
+        - Canvas新建用专用方法（fromBase64Const/fromNodeConst/fromGuidConst），非创建场景的空占位用 `BeCanvas.fromBeConst()`
         - 若需要赋值常量,应使用`G.create.*(支持创建:bool/bytes/canvas/color/dict/float/icon/listN/long/string/struct)`或`G.creatVariable.*(Vector3/device/mech/player)`
     - 全局变量
         - 在BeScript当中,全局变量只能声明在零件这一层面
