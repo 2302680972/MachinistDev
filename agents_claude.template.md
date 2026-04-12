@@ -376,9 +376,10 @@
 - 若频繁遇到MCP的拒绝,应该回顾前面提交的修改是否符合规则
 - 当 `patch_mech_view` 或 `patch_mech_view_multiedit` 返回的错误信息说明草稿已保存为 `xxx.ts.patch` 或 `xxx.html.patch` 时，说明本次修改的文本匹配成功但未通过后续校验。此时：
     - MCP 已自动将修改内容保存为 `.patch` 草稿文件
-    - 若要继续这次修改，应读取该 patch 文件理解 diff 内容，修正问题后使用 `patch_commit_file` 重新提交
-    - 若不再继续这次修改，直接忽略该草稿即可，不要为了“收尾”主动调用 `patch_cleanup_files`
-    - `patch_commit_file` 会校验基线哈希；若视图内容已变化，会提示该 patch 已失效
+    - 草稿不会干扰 `patch_mech_view` / `patch_mech_view_multiedit` 的正常使用，后续的 patch 操作照常进行即可
+    - 若要继续这次修改，应读取该 patch 文件理解 diff 内容，修正问题后使用 `patch_commit_draft` 重新提交
+    - 若不再继续这次修改，直接忽略该草稿即可，不要为了”收尾”主动调用 `patch_cleanup_drafts`
+    - `patch_commit_draft` 会校验基线哈希；若视图内容已变化，会提示该 patch 已失效
 
 ### 视图换算规则
 

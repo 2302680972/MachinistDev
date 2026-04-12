@@ -81,13 +81,14 @@
 
 - **来源**：`patch_mech_view` / `patch_mech_view_multiedit` 校验失败时自动生成（文本匹配成功但后续校验未通过）
 - **格式**：unified diff + 头部元数据（`baseline-hash` / `created`）
-- **路径规则**：相对于视图根目录（`temp/toolkit/views/`），与 ViewPath 同源。即 `patch_commit_file` / `patch_cleanup_files` 的参数使用与 `patch_mech_view.view_path` 相同的相对路径格式，仅末尾追加 `.patch` 后缀
+- **路径规则**：相对于视图根目录（`temp/toolkit/views/`），与 ViewPath 同源。即 `patch_commit_draft` / `patch_cleanup_drafts` 的参数使用与 `patch_mech_view.view_path` 相同的相对路径格式，仅末尾追加 `.patch` 后缀
 - **命名**：与对应视图同路径 + `.patch` 后缀，如 `abc.map_/123.ts.patch`
 - **生命周期**：
+  - 草稿不会干扰 `patch_mech_view` / `patch_mech_view_multiedit` 的正常使用，后续的 patch 操作照常进行即可
   - 视图重建时自动校验：基线哈希与当前视图一致则保留，否则丢弃
   - 成功提交后视图内容变化，下次重建时 patch 自然淘汰
   - 若放弃此次修改，直接忽略该草稿即可，通常不需要主动清理
-- **恢复**：修正问题后用 `patch_commit_file` 工具重新提交
+- **恢复**：修正问题后用 `patch_commit_draft` 工具重新提交
 
 ## 相关文档
 
