@@ -1,3 +1,4 @@
+<!-- mechtoolkit: 以下是mechtoolkit文档 -->
 # CreatAI平台开发指引
 
 ## 必读规则
@@ -178,7 +179,6 @@
 	        - 返回值变量: 非形参时固定在方法体首行声明`var ret: BeType;`,类型必须与`BeScript({ retVar })`一致
 	        - 普通局部变量: 在首次赋值行内联声明`var a: BeType = call(...)`,后续赋值只写`a = call(...)`不重复声明
 	        - 局部变量禁止与全局变量或形参重名
-	        - 方法体内部禁止空白行,如需空白可改用"// "
         - 任何局部变量均需要被至少使用1次才允许声明.patch_mech_view时需遵守以下规则:
             - 新增变量时,必须确保在一次patch_mech_view调用当中同时完成声明和首次使用.悬空的声明会被抹除所以只写声明而不用无意义;而未声明而直接使用则会直接导致语法错误!
             - 删除变量声明时,若代码里仍保留对该变量的使用则会被拒绝
@@ -187,8 +187,7 @@
         - findExcel2 搜索返回的是id本身: 在TS视图当中`G.findExcel2` 禁止用 `"id"` 作为搜索列.正确做法是用普通列查到行 ID，再用 `readExcel2` 按 ID 读取其他列.是严禁不是不推荐!是必然导致报错!
     - Canvas相关:
         - Canvas对象和UI对象:
-            - create.canvas是创建真实可见的UI对象,禁止滥用.相应地,在TS视图当中明确禁止滥用G.create.canvas,滥用会导致引用断裂/性能下降等严重问题
-            - 游戏当前存在无法直接生成占位Canvas变量的缺陷,设计逻辑时需注意此特性
+            - create.canvas传入布局数据时创建真实的UI对象,禁止滥用;传入空值(BeCanvas.fromBeConst())则创建空Canvas,可用于占位
             - 禁止随意丢弃任何UI对象引用.UI对象无GC机制,丢弃引用会导致内存泄漏!
             - 标准的获取UI组件的方案是: 
                 1. 创建Canvas后保存Canvas的引用,用Canvas和Canvas内的路径进行查找
@@ -252,8 +251,8 @@
         - 开启关闭全部功能(Mech.setActive): 这是独立的开关!关掉之后图形/物理/逻辑等均关闭.无需反复单独开关别的功能.
         - 禁止随意丢弃机械对象引用,和字典等类型不一样,机械没有GC,随便乱扔引用会导致内存泄漏!
     - 怎么模仿Null(非推荐做法,非必要禁止使用)
-        - 声明一个全局但不使用其赋值.比如声明一个Null_Canvas常量.别处只用不赋值,也不要修改其内容
-        - 这种做法是对底层缺陷的代偿(比如Canvas无法生成Null,字典/列表等新建即创建新对象的开销),是明确的Hack,而不是常规做法
+        - 声明一个全局但不使用其赋值.别处只用不赋值,也不要修改其内容
+        - 这种做法是对底层缺陷的代偿(比如字典/列表等新建即创建新对象的开销),是明确的Hack,而不是常规做法
         - 这种伪Null可以用来给固定类型成员列表快速填值占位,保持定长列表特性以满足特定场景需求.但禁止在别处滥用
     - 充分利用零件(Device)的Act(用varf补充Act):
         - 大部分的零件Act,直接静态调用即可
@@ -439,3 +438,5 @@ lines of code is better than a premature abstraction.
 
 - Avoid backwards-compatibility hacks like renaming unused _vars, re-exporting types, adding // removed
 comments for removed code, etc. If you are certain that something is unused, you can delete it completely.
+
+<!-- mechtoolkit: 以上是mechtoolkit文档 -->

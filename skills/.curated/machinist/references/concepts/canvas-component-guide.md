@@ -138,7 +138,7 @@ if ($panel.exist()) {
 零件 TS 视图里可能出现这种写法：
 
 ```ts
-$itemUI = G.create.canvas(BeCanvas.fromBeConst(
+$itemUI = G.create.canvas(BeCanvas.fromBase64Const(
 `
 <Canvas>
   <UIRect name="panel" Pos="110,850,0" size="450,145,1" color="rgba(1,1,1,0.78767)" BorderWidth="-1" Radius="10" slicedPicGuid="9ea2db5b6ad641d19815c9fe093eaa08" slicedBorderLB="58.5,75,0" slicedBorderRT="149.5,75,0" slicedRectLB="0,0,0" slicedRectRT="457,150,0">
