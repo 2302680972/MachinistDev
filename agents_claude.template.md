@@ -120,8 +120,8 @@
                 - repo: 代码仓库脚本的GUID(链接脚本时使用)
                 - retVar: 返回值变量名(BeScript当中的写法)
             - 自定义脚本: `public 属性名 = BeScript({ name: "原名" })((参数) => { 方法体 });`
-            - 事件脚本: 使用`EventGroup`声明,按事件类型分组,成员为`BeScript`调用
-            - 事件脚本组: 外壳禁止修改或删除,表明这是零件类的固有结构!若需删除事件脚本,则必须只能删除脚本本身的定义,而事件脚本组的外壳必须保留!即使是空的壳子也必须保留!
+            - 事件脚本: 位于`static { }`块中,按事件类型通过`this.registerEvent_xxx(this, { ... })`注册,成员为`BeScript`调用。lambda使用`function (this: DeviceName, 事件参数...)`形式,其中`this`是注入的设备类型声明,使方法体内`this.xxx`的泛型调用获得正确类型。**不要移除或修改`this`参数**
+            - 事件脚本组: `this.registerEvent_xxx(this, { ... })`的外壳禁止修改或删除,表明这是零件类的固有结构!若需删除事件脚本,则必须只能删除脚本本身的定义,而事件注册外壳必须保留!即使是空的`this.registerEvent_xxx(this, { });`也必须保留!
             - 含delay或await的脚本使用`BeScriptAsync`+`async`箭头函数,但这只表示方法体可等待,不等于调用方会等待
             - 调用方是否阻塞只看返回值: 异步无返回值时调用方立即继续; 异步有返回值时调用方必须await
             - 若只想控制时序,可以专门加入一个占位返回值; 即使调用方后续把这个返回值丢弃,也仍然会形成阻塞
@@ -145,7 +145,7 @@
         - 规范化规则: 原始脚本名本身是合法 TS 标识符且不是关键字时，直接用原名/否则由工具生成以 `X_` 开头的标识符，并把非法字符编码成 `_xNN_` 片段
         - `BeScript({ name })` 中的 name 是原始名称,属性名是转义后的标识符,二者必须保持一致性否则将会导致工具拒绝写入
     - 事件列表约束:
-        - 零件类型对应着确定性的事件列表.在TS视图当中,新增或修改事件脚本时以 TS 视图中现有 @events(...) 和 EventGroup 声明为唯一准则
+        - 零件类型对应着确定性的事件列表.在TS视图当中,新增或修改事件脚本时以 TS 视图中现有 @events(...) 和 `static { }` 块中的 `this.registerEvent_xxx` 声明为唯一准则
         - 事件签名的权威来源是 `temp/toolkit/bescript_reference/sdk.ts` 中自动生成的 `TsViewEventSignatureMap` 与 `TsViewEventMethod`；事件脚本参数必须与该签名一致，禁止自造签名
     - 动态调用参数规则:
         - 指定零件动态调用方法时,直接填方法的`原始BeScript名称`!比如`UI'清空`这个名称绝对不可以乱填什么`X_UI_x27_清空`
@@ -166,7 +166,7 @@
         - 空值占位类型（UI/Bytes/Canvas/Device/Mech/Player/ListN/Dict/Any/Icon/Struct）无参调用：`BeUI.fromBeConst()`
         - 枚举常量必须带泛型和成员：`BeEnum<Foo>.fromBeConst(Foo.Bar)`
         - Canvas新建用专用方法（fromBase64Const/fromNodeConst/fromGuidConst），非创建场景的空占位用 `BeCanvas.fromBeConst()`
-        - 若需要赋值常量,应使用`G.create.*(支持创建:bool/bytes/canvas/color/dict/float/icon/listN/long/string/struct)`或`G.creatVariable.*(Vector3/device/mech/player)`
+        - `G.create.*` / `G.creatVariable.*` 用于从变量创建值（如 `G.create.string(w)`），禁止用于包裹常量。有语义值类型（Float/Long/Bool/String/Color/Vector3）常量直接写作 `BeXxx.fromBeConst("值")` 传入参数，无需包一层 `G.create.xxx`
     - 全局变量
         - 在BeScript当中,全局变量只能声明在零件这一层面
         - 在TS视图当中,全局变量在类型顶部`// [Globals] BEGIN/END`区段内,只能在这一块声明不得越界
@@ -373,12 +373,12 @@
 - **mechtoolkit 等 MCP** 由该 Host 暴露；只要MCP正常运行,文件就不会不同步此时不应该胡乱假设"不同步"而是重新读取最新状态。除非长时间持续下去的异常状态应该通知用户
 - 若 MCP 持续异常（超时、断连、工具无响应等），且已排除本机网络不通，则可能Host 已不可用,需重启.提示用户尝试重启 Host 以修复工具链。
 - 若频繁遇到MCP的拒绝,应该回顾前面提交的修改是否符合规则
-- 当 `patch_mech_view` 或 `patch_mech_view_multiedit` 返回的错误信息说明草稿已保存为 `xxx.ts.patch` 或 `xxx.html.patch` 时，说明本次修改的文本匹配成功但未通过后续校验。此时：
-    - MCP 已自动将修改内容保存为 `.patch` 草稿文件
-    - 草稿不会干扰 `patch_mech_view` / `patch_mech_view_multiedit` 的正常使用，后续的 patch 操作照常进行即可
-    - 若要继续这次修改，应读取该 patch 文件理解 diff 内容，修正问题后使用 `patch_commit_draft` 重新提交
-    - 若不再继续这次修改，直接忽略该草稿即可，不要为了”收尾”主动调用 `patch_cleanup_drafts`
-    - `patch_commit_draft` 会校验基线哈希；若视图内容已变化，会提示该 patch 已失效
+- 当 `patch_mech_view` 或 `patch_mech_view_multiedit` 返回的错误信息说明草稿已保存为 `xxx.ts.draft` 或 `xxx.html.draft` 时，说明本次修改的文本匹配成功但未通过后续校验。此时：
+    - MCP 已自动将修改内容保存为 `.draft` 草稿文件
+    - 草稿不会干扰 `patch_mech_view` / `patch_mech_view_multiedit` 的正常使用，后续的编辑操作照常进行即可
+    - 若要继续这次修改，应读取该草稿文件理解修改内容，修正问题后使用 `commit_draft` 重新提交
+    - 若不再继续这次修改，直接忽略该草稿即可，不要为了”收尾”主动调用 `cleanup_drafts`
+    - `commit_draft` 会校验基线哈希；若视图内容已变化，会提示该草稿已失效
 
 ### 视图换算规则
 
@@ -395,7 +395,7 @@
 - 注意修改顺序: 必须先有脚本才能添加对脚本的调用,不得先调用再声明
 - 为确保修改真实有效,写回后必须复读确认
 - `patch_mech_view`为确保准确性,在脚本仍被引用时是禁止更名和删除的,如需更名可以用refactor相关重命名.删除脚本的正确做法:先删除所有调用处(Act调用等),再将整个方法定义(装饰器+签名+花括号+方法体)一次性删掉.禁止只清空方法体而保留空壳
-- `patch_mech_view` 校验失败时会自动保存 `.patch` 文件到视图同目录，无需手动备份修改内容。patch 文件与视图共存，视图重建时自动校验 patch 有效性（基线哈希匹配则保留，否则丢弃）
+- `patch_mech_view` 校验失败时会自动保存 `.draft` 文件到视图同目录，无需手动备份修改内容。草稿文件与视图共存，视图重建时自动校验草稿有效性（基线哈希匹配则保留，否则丢弃）
 
 ## 弹幕互动游戏设计要点
 
