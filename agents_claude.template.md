@@ -165,7 +165,7 @@
         - 有语义值类型（Bool/Float/Long/Color/Vector3/String）填具体值：`BeFloat.fromBeConst("1")`
         - 空值占位类型（UI/Bytes/Canvas/Device/Mech/Player/ListN/Dict/Any/Icon/Struct）无参调用：`BeUI.fromBeConst()`
         - 枚举常量必须带泛型和成员：`BeEnum<Foo>.fromBeConst(Foo.Bar)`
-        - Canvas新建用专用方法（fromBase64Const/fromNodeConst/fromGuidConst），非创建场景的空占位用 `BeCanvas.fromBeConst()`
+        - Canvas新建用专用方法（fromBase64Const/fromNodeConst/fromGuidConst），非创建场景的空占位用 `BeCanvas.fromBeConst()`；fromNodeConst 的第二参数写 Canvas HTML 模板字符串，根元素为 `MechCanvas`
         - `G.create.*` / `G.creatVariable.*` 用于从变量创建值（如 `G.create.string(w)`），禁止用于包裹常量。有语义值类型（Float/Long/Bool/String/Color/Vector3）常量直接写作 `BeXxx.fromBeConst("值")` 传入参数，无需包一层 `G.create.xxx`
     - 全局变量
         - 在BeScript当中,全局变量只能声明在零件这一层面
@@ -275,7 +275,7 @@
 
 #### 属性规范
 
-- Schema应参考`temp/toolkit/canvas_render/CanvasRenderLayout.ts`当中的明确类型定义,而不是无依据地瞎猜!
+- Schema应参考 HTML 视图头部列出的`temp/toolkit/canvas_render/CanvasTypesNodes.ts`节点定义,而不是无依据地瞎猜!
 - 冗余或者缺失必要属性都可能导致错误!
 - 属性应符合规范,不要尝试乱猜属性的用处,渲染引擎已明确介绍用处就不要瞎猜!
 - Vector3类型参数位置的z轴不要乱填(必须对齐原版格式,虽然那个值并无效果)
