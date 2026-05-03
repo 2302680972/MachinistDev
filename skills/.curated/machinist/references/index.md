@@ -34,6 +34,7 @@
 | 投射物与碰撞 | `tips/projectile-collision-detector.md` |
 | UI 动画机制 | `tips/canvas-animation-mechanism.md` |
 | 图片与动图 | `tips/image-animation-guide.md` |
+| Shader 材质属性 | `tips/shader-material-properties.md` |
 
 ## 数据与配置
 
@@ -52,4 +53,3 @@
 ## 示例工程
 
 `example-project-guide.md`
-
