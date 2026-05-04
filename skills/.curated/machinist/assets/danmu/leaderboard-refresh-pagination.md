@@ -111,6 +111,6 @@ public 积分榜刷新 = BeScriptAsync({ name: "积分榜刷新" })(async () => 
 要点：
 - 脚本使用 `BeScript({ name: "..." })(arrow)` 属性赋值形式
 - 异步脚本使用 `BeScriptAsync({ name: "..." })(async arrow)` 形式
-- `G.dynamicCallRet` 配合 `G.__async` 进行异步请求
-- 分页通过 `PageIndex` 和 `Num` 参数控制
+- `DanmuGetAllRank` 是平台动态指令 Key，用 `G.dynamicCallRet` 异步读取排行榜分页数据
+- 分页参数是 `PageIndex` 和 `Num`，返回 `Dict` 中的 `Ranks` 列表
 - 列表项通过 `canvas.read` + `panel.addSon` 动态添加

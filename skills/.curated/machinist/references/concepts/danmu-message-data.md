@@ -80,6 +80,19 @@
 
 ### 清空：`danmu.clearRank()`
 
+### 分页读取全榜：`DanmuGetAllRank`
+
+`DanmuGetAllRank` 是平台动态指令 Key，用于分页读取弹幕排行榜全榜。调用方式是异步 `G.dynamicCallRet(Key, Data)`，返回 `Dict`。
+
+`Data` 字段：
+- `PageIndex`：页码，从 `0` 开始
+- `Num`：每页数量
+
+返回 `Dict` 中已知字段：
+- `Ranks`：排行榜列表；模板示例中读取了列表项的 `name` 和 `score`
+
+已有静态接口的能力优先使用 `danmu.*`。例如上传成绩用 `danmu.addRank`，读取单个观众成绩用 `danmu.getByID`，跨直播间数据用 `danmu.setDict/getDict/getDicts`。只有静态接口没有覆盖、且已确认平台支持的 Key，才使用 `G.dynamicCallRet` 或 `G.dynamicCall`。
+
 ## 弹幕玩家跨直播间数据（`danmu.setDict/getDict`）
 
 用于存储“观众维度”的长期数据（例如累计分数、累计胜场、解锁/称号、局外资源等）：
