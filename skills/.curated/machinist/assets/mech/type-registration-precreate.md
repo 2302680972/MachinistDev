@@ -70,6 +70,12 @@ public X_Wall_x27_SetWall = BeScript({ name: "Wall'SetWall", color: [8, 0, 255],
 });
 ```
 
+生成位姿注意：
+
+- `G.createAIMech(..., $pos, $direction, ...)` 已经是新建机械的初始位姿设置
+- 新建分支不要在返回前再补一次移动/旋转(很可能被系统底层静默吞掉导致难以排查)
+- 上面复用分支处理的是已存在对象，不等同于刚创建的新机械
+
 要点：
 - 使用 `BeScript({ name: "...", color: [...], comment: "..." })` 赋值格式
 - 注册时创建两个列表：All 和 Unused

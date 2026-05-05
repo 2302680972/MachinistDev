@@ -73,6 +73,16 @@ Act.byName<Device_模型创建器_395>("模型创建器").changeMech(modelFile)
 obj = G.createAIMech(BeString.fromBeConst("模型创建器"), BeFloat.fromBeConst("0"), pos, dir, BeEnum.fromBeConst("1"), BeBool.fromBeConst("0"))
 ```
 
+## 刚创建机械的位姿窗口
+
+机械产生不是完全无状态的瞬时操作。生成器创建机械后会激活机械、注入脚本、触发机械初始化，并在后续更新里释放刚体状态。这个短窗口内，不要把“刚生成的新机械”当成普通已稳定机械处理。
+
+硬规则：
+
+- 新建机械的初始坐标和朝向，直接写进 `G.createAIMech` / `G.createPlayerMech` 的参数
+- 不要先把机械创建到临时点，再在同一调用栈里立刻用 `Mech.move` / `Mech.rot` 或 `Device.setPosKinematic` / `Device.setRotKinematic` 二次覆盖
+- 需要创建后再校正位姿时，放到后续 `update` / `mechUpdate`，或等对象进入对象池复用流程后再做
+
 ## 推荐落地方式（最少踩坑）
 
 - 通用逻辑放生成器；不同机械的“差异点”留在机械核心里，通过 `Public'...` 形成稳定接口
